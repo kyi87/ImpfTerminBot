@@ -41,7 +41,12 @@ namespace ImpfBot
 
                 if (PageContains("Ungültiger Vermittlungscode"))
                 {
-                    throw new Exception("Ungültiger Vermittlungscode");
+                    throw new Exception("Ungültiger Vermittlungscode.");
+                }
+
+                if (PageContains("Anspruch abgelaufen"))
+                {
+                    throw new Exception("Anspruch abgelaufen. Vermittlungscode ist nicht mehr gültig.");
                 }
 
                 try
