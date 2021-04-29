@@ -4,6 +4,7 @@ Programm zum automatisiertem Finden von Impfterminen über die Seite https://www
 
 ## Vorraussetzungen
 - Nur unter Windows lauffähig
+- momentan wird nur Google Chrome unterstützt
 - Es muss ein gültiger Vermittlungscode vorhanden sein
 
 ## TODO
