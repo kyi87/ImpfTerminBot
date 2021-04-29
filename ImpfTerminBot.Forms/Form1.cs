@@ -86,16 +86,29 @@ namespace ImpfBot.Forms
                 EnableControls(false);
                 await worker.Search();
 
-                var player = new SoundPlayer(@"C:\Windows\Media\Alarm01.wav");
-                player.Play();
-
+                PlaySound();
                 MessageBox.Show("Bitte Daten im Browser eingeben.", "Termin gefunden.", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 EnableControls(true);
             }
             catch (Exception ex)
             {
+                SystemSounds.Exclamation.Play();
                 MessageBox.Show($"Es ist ein Fehler aufgetreten: {ex.Message}. Programm wird beendet.", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
+            }
+        }
+
+        private static void PlaySound()
+        {
+            var soundFile = @"C:\Windows\Media\Alarm01.wav";
+            if (File.Exists(soundFile))
+            {
+                var player = new SoundPlayer(soundFile);
+                player.Play();
+            }
+            else
+            {
+                SystemSounds.Beep.Play();
             }
         }
 
