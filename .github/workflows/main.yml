@@ -27,7 +27,7 @@ jobs:
 
     - name: Publish ImpfTerminBot.Forms
       if: ${{ always() }}
-      run: dotnet publish ${{ github.workspace }}/ImpfTerminBot.Forms.csproj --configuration Release 
+      run: dotnet publish ${{ github.workspace }}/ImpfTerminBot.Forms/ImpfTerminBot.Forms.csproj --configuration Release 
       
     - name: Upload ImpfTerminBot.Forms Build Artifact
       if: ${{ always() }}
