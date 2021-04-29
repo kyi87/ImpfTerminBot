@@ -1,0 +1,16 @@
+[
+    {
+        "Country": "Baden-Württemberg",
+        "Centers":
+        [{
+                "CenterName": "Ulm",
+                "Postcode": "89073",
+                "CenterId": "48"
+            }, {
+                "CenterName": "Heidenheim",
+                "Postcode": "89522",
+                "CenterId": "49"
+            }
+        ]
+    }
+]

@@ -1,0 +1,185 @@
+[{
+        "Country": "Baden-Württemberg",
+        "Centers":
+        [{
+                "CenterName": "69123 Heidelberg, Gesellschaftshaus Pfaffengrund",
+                "Postcode": "69123"
+            }, {
+                "CenterName": "69124 Heidelberg, Zentrales Impfzentrum Heidelberg - Commissary Patrick-Henry-Village",
+                "Postcode": "69124"
+            }, {
+                "CenterName": "69469 Weinheim, Kreisimpfzentrum Weinheim - 3-Glocken-Center",
+                "Postcode": "69469"
+            }, {
+                "CenterName": "70174 Stuttgart, Impfzentrum Klinikum Stuttgart in der Liederhalle (Hegel-Saal)",
+                "Postcode": "70174"
+            }, {
+                "CenterName": "70376 Stuttgart, Impfzentrum am Robert-Bosch-Krankenhaus",
+                "Postcode": "70376"
+            }, {
+                "CenterName": "70629 Leinfelden-Echterdingen, KIZ Messe Stuttgart (Landkreis Esslingen)",
+                "Postcode": "70629"
+            }, {
+                "CenterName": "71065 Sindelfingen , KIZ Böblingen",
+                "Postcode": "71065"
+            }, {
+                "CenterName": "71297 Mönsheim, KIZ Enzkreis - Appenbergsporthalle",
+                "Postcode": "71297"
+            }, {
+                "CenterName": "71334 Waiblingen, Kreisimpfzentrum Waiblingen",
+                "Postcode": "71334"
+            }, {
+                "CenterName": "71636 Ludwigsburg, Impfzentrum Ludwigsburg",
+                "Postcode": "71636"
+            }, {
+                "CenterName": "72072 Tübingen, Paul Horn Arena",
+                "Postcode": "72072"
+            }, {
+                "CenterName": "72213 Altensteig-Wart, KiZ Kreis Calw",
+                "Postcode": "72213"
+            }, {
+                "CenterName": "72280 Dornstetten, Kreisimpfzentrum Landkreis Freudenstadt",
+                "Postcode": "72280"
+            }, {
+                "CenterName": "72469 Meßstetten, Kreisimpfzentrum Zollernalbkreis",
+                "Postcode": "72469"
+            }, {
+                "CenterName": "72762 Reutlingen, Stadion an der Kreuzeiche",
+                "Postcode": "72762"
+            }, {
+                "CenterName": "73037 Göppingen, Werfthalle im Stauferpark",
+                "Postcode": "73037"
+            }, {
+                "CenterName": "73430 Aalen, KIZ Ostalbkreis ",
+                "Postcode": "73430"
+            }, {
+                "CenterName": "73730 Stadt Esslingen am Neckar, KIZ Esslingen",
+                "Postcode": "73730"
+            }, {
+                "CenterName": "74081 Heilbronn, Kreisimpfzentrum Heilbronn",
+                "Postcode": "74081"
+            }, {
+                "CenterName": "74360 Ilsfeld-Auenstein, Kreisimpfzentrum Landkreis Heilbronn",
+                "Postcode": "74360"
+            }, {
+                "CenterName": "74549 Wolpertshausen, KIZ Wolpertshausen",
+                "Postcode": "74549"
+            }, {
+                "CenterName": "74585 Rot am See, ZIZ Rot am See ",
+                "Postcode": "74585"
+            }, {
+                "CenterName": "74613 Öhringen, Kreisimpfzentrum Hohenlohekreis",
+                "Postcode": "74613"
+            }, {
+                "CenterName": "74821 Mosbach, Kreisimpfzentrum Mosbach",
+                "Postcode": "74821"
+            }, {
+                "CenterName": "74889 Sinsheim, Kreisimpfzentrum Sinsheim - Parsa-Halle",
+                "Postcode": "74889"
+            }, {
+                "CenterName": "75056 Sulzfeld, Kreisimpfzentrum Sulzfeld",
+                "Postcode": "75056"
+            }, {
+                "CenterName": "75175 Pforzheim, Kreisimpfzentrum Pforzheim",
+                "Postcode": "75175"
+            }, {
+                "CenterName": "76137 Karlsruhe, Kreisimpfzentrum Schwarzwaldhalle Karlsruhe",
+                "Postcode": "76137"
+            }, {
+                "CenterName": "76287 Rheinstetten, Impfzentrum Messe Karlsruhe",
+                "Postcode": "76287"
+            }, {
+                "CenterName": "76530 Baden-Baden, KIZ Kurhaus Baden-Baden",
+                "Postcode": "76530"
+            }, {
+                "CenterName": "76646 Bruchsal-Heidelsheim, Kreisimpfzentrum Bruchsal",
+                "Postcode": "76646"
+            }, {
+                "CenterName": "77656 Offenburg, Messe Offenburg-Ortenau, Halle 1",
+                "Postcode": "77656"
+            }, {
+                "CenterName": "77815 Bühl, Kreisimpfzentrum Landkreis Rastatt in Bühl",
+                "Postcode": "77815"
+            }, {
+                "CenterName": "77933 Lahr / Schwarzwald, KIZ Lahr - Rheintalhalle Lahr",
+                "Postcode": "77933"
+            }, {
+                "CenterName": "78056 Villingen-Schwenningen, Landratsamt Schwarzwald-Baar-Kreis",
+                "Postcode": "78056"
+            }, {
+                "CenterName": "78224 Singen (Hohentwiel), Kreisimpfzentrum Singen (Kreis Konstanz)",
+                "Postcode": "78224"
+            }, {
+                "CenterName": "78532 Tuttlingen, Kreisimpfzentrum Landkreis Tuttlingen",
+                "Postcode": "78532"
+            }, {
+                "CenterName": "78628 Rottweil, Kreisimpfzentrum Rottweil, Stadthalle",
+                "Postcode": "78628"
+            }, {
+                "CenterName": "79108 Freiburg im Breisgau, Zentrales Impfzentrum (ZIZ) Freiburg, Messe Freiburg, Messehalle 2",
+                "Postcode": "79108"
+            }, {
+                "CenterName": "79341 Kenzingen, Kreisimpfzentrum Emmendingen",
+                "Postcode": "79341"
+            }, {
+                "CenterName": "79379 Müllheim, Kreisimpfzentrum Müllheim",
+                "Postcode": "79379"
+            }, {
+                "CenterName": "79541 Lörrach, KIZ Lörrach - Impulsivcenter Lörrach",
+                "Postcode": "79541"
+            }, {
+                "CenterName": "79761 Waldshut-Tiengen, Kreisimpfzentrum Landkreis Waldshut",
+                "Postcode": "79761"
+            }, {
+                "CenterName": "88045 Friedrichshafen, Kreisimpfzentrum Bodenseekreis",
+                "Postcode": "88045"
+            }, {
+                "CenterName": "88212 Ravensburg, Oberschwabenhalle Kreisimpfzentrum Ravensburg",
+                "Postcode": "88212"
+            }, {
+                "CenterName": "88367 Hohentengen, Kreisimpfzentrum Landkreis Sigmaringen",
+                "Postcode": "88367"
+            }, {
+                "CenterName": "88444 Ummendorf, Kreisimpfzentrum Ummendorf (Landkreis Biberach)",
+                "Postcode": "88444"
+            }, {
+                "CenterName": "89073 Ulm, Zentrales Impfzentrum Ulm",
+                "Postcode": "89073"
+            }, {
+                "CenterName": "89522 Heidenheim, Congress Centrum Heidenheim",
+                "Postcode": "89522"
+            }, {
+                "CenterName": "89584 Ehingen (Donau), Kreisimpfzentrum Ehingen (Donau)",
+                "Postcode": "89584"
+            }, {
+                "CenterName": "97980 Bad Mergentheim, Kreisimpfzentrum Main-Tauber-Kreis",
+                "Postcode": "97980"
+            }
+        ]
+    }, {
+        "Country": "Brandenburg",
+        "Centers":
+        [
+        ]
+    }, {
+        "Country": "Hamburg",
+        "Centers":
+        [
+        ]
+    }, {
+        "Country": "Hessen",
+        "Centers":
+        [
+        ]
+    }, {
+        "Country": "Nordrhein-Westfalen",
+        "Centers":
+        [
+        ]
+    }, {
+        "Country": "Sachsen-Anhalt",
+        "Centers":
+        [
+        ]
+    }
+]
