@@ -34,12 +34,5 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: ImpfTerminBot.Forms
-        path: /${{ github.workspace }}/ImpfTerminBot.Forms.csproj/bin/Release/netcoreapp3.1/publish/      
-      
-    - uses: "marvinpinto/action-automatic-releases@latest"
-      with:
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        prerelease: false
-
-
+        path: /${{ github.workspace }}/ImpfTerminBot.Forms.csproj/bin/Release/netcoreapp3.1/publish/
     
