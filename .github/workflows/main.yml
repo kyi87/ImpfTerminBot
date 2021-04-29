@@ -34,5 +34,5 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: ImpfTerminBot.Forms
-        path: /${{ github.workspace }}/ImpfTerminBot.Forms/bin/Release/netcoreapp3.1/publish/
+        path: ${{ github.workspace }}/ImpfTerminBot.Forms/bin/Release/netcoreapp3.1/publish/
     
