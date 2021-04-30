@@ -107,9 +107,10 @@ namespace ImpfBot
         {
             var btn = m_Driver.FindElement(By.CssSelector("button[class='btn btn-magenta kv-btn kv-btn-round search-filter-button']"));
             btn.Click();
-            Thread.Sleep(500);
+            Thread.Sleep(2000);
 
-            var isSuccess = !Exists(By.XPath("//*[contains(., 'Derzeit stehen leider keine Termine zur Verfügung.')]"));
+            var isSuccess = Exists(By.XPath("//*[contains(., '1. Impftermin')]")) && 
+                            !Exists(By.XPath("//*[contains(., 'Derzeit stehen leider keine Termine zur Verfügung.')]"));
             return isSuccess;
         }
 
