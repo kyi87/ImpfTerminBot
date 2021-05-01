@@ -37,7 +37,7 @@ jobs:
         path: ${{ github.workspace }}/ImpfTerminBot.GUI/bin/Release/netcoreapp3.1/publish/
         
     - name: Extract some files
-      run: zip -r ImpfTerminBot.zip ${{ github.workspace }}/ImpfTerminBot.GUI/bin/Release/netcoreapp3.1/publish/
+      run: Compress-Archive ${{ github.workspace }}/ImpfTerminBot.GUI/bin/Release/netcoreapp3.1/publish/ ImpfTerminBot.zip
         
     - uses: "marvinpinto/action-automatic-releases@latest"
       with:
