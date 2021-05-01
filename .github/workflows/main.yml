@@ -35,4 +35,13 @@ jobs:
       with:
         name: ImpfTerminBot.GUI
         path: ${{ github.workspace }}/ImpfTerminBot.GUI/bin/Release/netcoreapp3.1/publish/
-    
+        
+    - uses: papeloto/action-zip@v1
+      with:
+        files: ${{ github.workspace }}/ImpfTerminBot.GUI/bin/Release/netcoreapp3.1/publish/
+        dest: ImpfTerminBot.zip
+        
+    - uses: actions/upload-artifact@v1
+      with:
+        name: ImpfTerminBot.zip Upload
+        path: ${{ github.workspace }}/ImpfTerminBot.zip
