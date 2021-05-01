@@ -41,7 +41,10 @@ jobs:
         files: ${{ github.workspace }}/ImpfTerminBot.GUI/bin/Release/netcoreapp3.1/publish/
         dest: ImpfTerminBot.zip
         
-    - uses: actions/upload-artifact@v1
+    - uses: "marvinpinto/action-automatic-releases@latest"
       with:
-        name: ImpfTerminBot.zip
-        path: ${{ github.workspace }}/ImpfTerminBot.zip
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "latest"
+        prerelease: true
+        title: "Development Build"
+        files: ${{ github.workspace }}/ImpfTerminBot.zip
