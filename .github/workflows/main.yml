@@ -47,4 +47,4 @@ jobs:
         automatic_release_tag: "latest"
         prerelease: true
         title: "Development Build"
-        files: ${{ github.workspace }}/ImpfTerminBot.zip
+        files: ImpfTerminBot.zip
