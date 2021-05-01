@@ -43,5 +43,5 @@ jobs:
         
     - uses: actions/upload-artifact@v1
       with:
-        name: ImpfTerminBot.zip Upload
+        name: ImpfTerminBot.zip
         path: ${{ github.workspace }}/ImpfTerminBot.zip
