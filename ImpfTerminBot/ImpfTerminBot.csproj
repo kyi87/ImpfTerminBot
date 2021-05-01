@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>ImpfTerminBot.GUI</AssemblyName>
+    <RootNamespace>ImpfTerminBot.GUI</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

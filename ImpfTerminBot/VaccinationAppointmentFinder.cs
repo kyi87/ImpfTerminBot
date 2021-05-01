@@ -1,10 +1,11 @@
-﻿using OpenQA.Selenium;
+﻿using ImpfTerminBot.Model;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ImpfBot
+namespace ImpfTerminBot
 {
     public class VaccinationAppointmentFinder
     {

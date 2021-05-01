@@ -6,6 +6,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <PublishChromeDriver>true</PublishChromeDriver>
+    <AssemblyName>ImpfTerminBot</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

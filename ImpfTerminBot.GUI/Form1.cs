@@ -4,8 +4,9 @@ using System.IO;
 using System.Text.Json;
 using System.Windows.Forms;
 using System.Media;
+using ImpfTerminBot.Model;
 
-namespace ImpfBot.Forms
+namespace ImpfTerminBot.Forms
 {
     public partial class Form1 : Form
     {
