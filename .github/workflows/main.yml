@@ -36,11 +36,8 @@ jobs:
         name: ImpfTerminBot.GUI
         path: ${{ github.workspace }}/ImpfTerminBot.GUI/bin/Release/netcoreapp3.1/publish/
         
-    - name: Archive Release
-      uses: thedoctor0/zip-release@master
-      with:
-        filename: 'ImpfTerminBot.zip'
-        path: ${{ github.workspace }}/ImpfTerminBot.GUI/bin/Release/netcoreapp3.1/publish/
+    - name: Extract some files
+      run: zip -r ImpfTerminBot.zip ${{ github.workspace }}/ImpfTerminBot.GUI/bin/Release/netcoreapp3.1/publish/
         
     - uses: "marvinpinto/action-automatic-releases@latest"
       with:
