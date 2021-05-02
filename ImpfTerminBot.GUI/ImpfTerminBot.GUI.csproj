@@ -7,6 +7,7 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <PublishChromeDriver>true</PublishChromeDriver>
     <AssemblyName>ImpfTerminBot</AssemblyName>
+    <ApplicationIcon>syringe_medical_10730.ico</ApplicationIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
