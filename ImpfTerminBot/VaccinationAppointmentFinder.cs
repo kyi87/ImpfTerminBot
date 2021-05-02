@@ -14,40 +14,48 @@ namespace ImpfTerminBot
         private string m_StartUrl;
         private CenterData m_CenterData;
         private IWebDriver m_Driver;
+        private bool m_IsSearching;
 
-        public VaccinationAppointmentFinder(string code, string country, CenterData centerData)
+        public VaccinationAppointmentFinder()
         {
-            m_Code = code;
-            m_Country = country;
-            m_CenterData = centerData;
+            m_IsSearching = false;
         }
 
-        public async Task Search()
+        public async Task<bool> Search(string code, string country, CenterData centerData)
         {
-            var code = m_Code;
-            var postcode = m_CenterData.Postcode;
-            m_StartUrl = $"https://001-iz.impfterminservice.de/impftermine/suche/{code}/{postcode}";
+            m_Country = country;
+            m_Code = code;
+            m_CenterData = centerData;
 
             m_Driver = new ChromeDriver();
+
+            var postcode = m_CenterData.Postcode;
+            m_StartUrl = $"https://001-iz.impfterminservice.de/impftermine/suche/{code}/{postcode}";
             m_Driver.Navigate().GoToUrl(m_StartUrl);
 
-            await SelectPage();
+            m_IsSearching = true;
+            return await SelectPage();
         }
 
-        public async Task SelectPage()
+        public void StopSearch()
         {
-            while (true)
+            m_IsSearching = false;
+        }
+
+        public async Task<bool> SelectPage()
+        {
+            while (m_IsSearching)
             {
                 await Task.Delay(1000);
 
                 if (PageContains("Ungültiger Vermittlungscode"))
                 {
-                    throw new Exception("Ungültiger Vermittlungscode.");
+                    throw new CodeNotValidException("Ungültiger Vermittlungscode");
                 }
 
                 if (PageContains("Anspruch abgelaufen"))
                 {
-                    throw new Exception("Anspruch abgelaufen. Vermittlungscode ist nicht mehr gültig.");
+                    throw new CodeNotValidException("Anspruch abgelaufen. Vermittlungscode ist nicht mehr gültig");
                 }
 
                 try
@@ -64,7 +72,7 @@ namespace ImpfTerminBot
                     {
                         if (HandlePageAppointmentSearch())
                         {
-                            break;
+                            return true;
                         }
                         else
                         {
@@ -77,11 +85,36 @@ namespace ImpfTerminBot
                     m_Driver.Navigate().GoToUrl(m_StartUrl);
                 }
             }
+
+            CloseBrowser();
+            return false;
+        }
+
+        public void CloseBrowser()
+        {
+            m_Driver?.Quit();
+        }
+
+        public bool IsSearching()
+        {
+            return m_IsSearching;
         }
 
         public bool PageContains(string text)
         {
             return Exists(By.XPath($"//*[contains(., '{text}')]"));
+        }
+
+        public bool Exists(By by)
+        {
+            if (m_Driver.FindElements(by).Count != 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private void HandlePageBooking()
@@ -134,18 +167,6 @@ namespace ImpfTerminBot
             {
                 Thread.Sleep(2000);
                 m_Driver.Navigate().GoToUrl(m_StartUrl);
-            }
-        }
-
-        public bool Exists(By by)
-        {
-            if (m_Driver.FindElements(by).Count != 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
             }
         }
     }

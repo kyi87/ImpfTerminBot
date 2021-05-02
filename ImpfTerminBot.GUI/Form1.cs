@@ -11,7 +11,9 @@ namespace ImpfTerminBot.Forms
     public partial class Form1 : Form
     {
         private List<CountryData> m_LocationData;
+        private VaccinationAppointmentFinder m_AppointmentFinder;
         private string m_Code;
+        private bool m_IsError;
 
         public Form1()
         {
@@ -28,6 +30,8 @@ namespace ImpfTerminBot.Forms
             var jsonString = File.ReadAllText(filename);
             m_LocationData = JsonSerializer.Deserialize<List<CountryData>>(jsonString);
 
+            m_AppointmentFinder = new VaccinationAppointmentFinder();
+
             var dict = new Dictionary<CountryData, string>();
             foreach (var location in m_LocationData)
             {
@@ -39,9 +43,10 @@ namespace ImpfTerminBot.Forms
             cbCountry.SelectedIndex = 0;
 
             btnStart.Enabled = false;
+            btnStop.Enabled = false;
         }
 
-        private void OnCountrySelectionChanged(object sender, EventArgs e)
+        private void cbCountry_SelectionChanged(object sender, EventArgs e)
         {
             var country = ((KeyValuePair<CountryData, string>)cbCountry.SelectedItem).Key;
 
@@ -75,28 +80,46 @@ namespace ImpfTerminBot.Forms
             }
         }
 
-        private async void OnBtnStartClick(object sender, EventArgs e)
+        private async void btnStart_Click(object sender, EventArgs e)
         {
             try
             {
+                btnStop.Enabled = true;
                 var country = ((KeyValuePair<CountryData, string>)cbCountry.SelectedItem).Key;
                 var center = ((KeyValuePair<CenterData, string>)cbCenter.SelectedItem).Key;
 
-                var worker = new VaccinationAppointmentFinder(m_Code, country.Country, center);
-
                 EnableControls(false);
-                await worker.Search();
+                var isSuccess = await m_AppointmentFinder.Search(m_Code, country.Country, center);
 
-                PlaySound();
-                MessageBox.Show("Bitte Daten im Browser eingeben.", "Termin gefunden.", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                EnableControls(true);
+                if(isSuccess)
+                {
+                    PlaySound();
+                    MessageBox.Show("Bitte Daten im Browser eingeben.", "Termin gefunden.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch(CodeNotValidException ex)
+            {
+                SystemSounds.Exclamation.Play();
+                MessageBox.Show($"{ex.Message}", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                m_AppointmentFinder.CloseBrowser();
             }
             catch (Exception ex)
             {
+                m_IsError = true;
                 SystemSounds.Exclamation.Play();
                 MessageBox.Show($"Es ist ein Fehler aufgetreten: {ex.Message}. Programm wird beendet.", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
+            finally
+            {
+                EnableControls(true);
+                btnStop.Enabled = false;
+            }
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            m_AppointmentFinder.StopSearch();
         }
 
         private static void PlaySound()
@@ -119,6 +142,22 @@ namespace ImpfTerminBot.Forms
             cbCenter.Enabled = b;
             cbCountry.Enabled = b;
             btnStart.Enabled = b;
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(m_AppointmentFinder.IsSearching() && !m_IsError)
+            {
+                DialogResult result = MessageBox.Show("Soll der Browser geschlossen werden? Alle eingegebenen Daten gehen verloren.", "Browser schließen", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                if (result == DialogResult.Yes)
+                {
+                    m_AppointmentFinder.CloseBrowser();
+                }
+                else if (result == DialogResult.Cancel)
+                {
+                    e.Cancel = true;
+                }
+            }
         }
     }
 }

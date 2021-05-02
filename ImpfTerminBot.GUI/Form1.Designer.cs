@@ -41,6 +41,7 @@ namespace ImpfTerminBot.Forms
             this.cbCountry = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnStop = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -50,13 +51,13 @@ namespace ImpfTerminBot.Forms
             // btnStart
             // 
             this.btnStart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnStart.Location = new System.Drawing.Point(268, 3);
+            this.btnStart.Location = new System.Drawing.Point(187, 3);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(260, 30);
+            this.btnStart.Size = new System.Drawing.Size(178, 30);
             this.btnStart.TabIndex = 1;
             this.btnStart.Text = "Termin suchen";
             this.btnStart.UseVisualStyleBackColor = true;
-            this.btnStart.Click += new System.EventHandler(this.OnBtnStartClick);
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
             // groupBox1
             // 
@@ -149,7 +150,7 @@ namespace ImpfTerminBot.Forms
             this.cbCountry.Name = "cbCountry";
             this.cbCountry.Size = new System.Drawing.Size(397, 23);
             this.cbCountry.TabIndex = 7;
-            this.cbCountry.SelectedIndexChanged += new System.EventHandler(this.OnCountrySelectionChanged);
+            this.cbCountry.SelectedIndexChanged += new System.EventHandler(this.cbCountry_SelectionChanged);
             // 
             // tableLayoutPanel1
             // 
@@ -168,10 +169,12 @@ namespace ImpfTerminBot.Forms
             // 
             // tableLayoutPanel3
             // 
-            this.tableLayoutPanel3.ColumnCount = 2;
+            this.tableLayoutPanel3.ColumnCount = 3;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 162F));
             this.tableLayoutPanel3.Controls.Add(this.btnStart, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.btnStop, 2, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 170);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -179,6 +182,17 @@ namespace ImpfTerminBot.Forms
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(531, 36);
             this.tableLayoutPanel3.TabIndex = 14;
+            // 
+            // btnStop
+            // 
+            this.btnStop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnStop.Location = new System.Drawing.Point(371, 3);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(157, 30);
+            this.btnStop.TabIndex = 2;
+            this.btnStop.Text = "Abbrechen";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
             // Form1
             // 
@@ -190,6 +204,7 @@ namespace ImpfTerminBot.Forms
             this.MinimumSize = new System.Drawing.Size(553, 248);
             this.Name = "Form1";
             this.Text = "ImpfTerminBot";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
@@ -211,6 +226,7 @@ namespace ImpfTerminBot.Forms
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.Button btnStop;
     }
 }
 
