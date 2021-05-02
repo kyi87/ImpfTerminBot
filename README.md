@@ -7,7 +7,7 @@ Der ImpfTerminBot erleichtert die teils langwierige Terminsuche für eine Corona
 
 ## Anleitung
 ### Installation
-Die Datei ImpfTerminBot.msi ausführen und den gewünschten Installations-Pfad wählen. Falls nicht vorhanden muss zuerst die .Net Runtime installiert werden ([.NetCore 3.1 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/thank-you/runtime-desktop-3.1.14-windows-x86-installer)). Nach der Installation wird automatisch eine Desktopverknüpfung erstellt.
+Die Datei ImpfTerminBot.msi ausführen und den gewünschten Installations-Pfad wählen. Falls nicht vorhanden muss zuerst die .Net Runtime installiert werden ([.NetCore 3.1 Desktop Runtime x64](https://dotnet.microsoft.com/download/dotnet/thank-you/runtime-desktop-3.1.14-windows-x64-installer)). Nach der Installation wird automatisch eine Desktopverknüpfung erstellt.
 
 ### Starten der Terminsuche
 Um die Terminsuche zu starten muss die Desktopverknüpfung "ImpfTerminBot" ausgeführt werden. Anschließend müssen die benötigten Daten eingetragen werden:
@@ -30,7 +30,7 @@ Der Vermittlungscode muss gültig sein und zum Bundsesland und zum Impfzentrum p
 - Nur unter Windows (10) lauffähig
 - Google Chrome muss installiert sein (Momentan wird nur Google Chrome unterstützt)
 - Es muss ein gültiger Vermittlungscode vorhanden sein
-- [.NetCore 3.1 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/thank-you/runtime-desktop-3.1.14-windows-x86-installer)
+- [.NetCore 3.1 Desktop Runtime x64](https://dotnet.microsoft.com/download/dotnet/thank-you/runtime-desktop-3.1.14-windows-x64-installer)
 
 ## TODO
 - [ ] data.json für andere Bundesländer / Impfzentren erweitern
