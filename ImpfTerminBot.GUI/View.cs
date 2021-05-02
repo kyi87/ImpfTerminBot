@@ -8,30 +8,27 @@ using ImpfTerminBot.Model;
 
 namespace ImpfTerminBot.Forms
 {
-    public partial class Form1 : Form
+    public partial class View : Form
     {
         private List<CountryData> m_LocationData;
         private VaccinationAppointmentFinder m_AppointmentFinder;
         private string m_Code;
         private bool m_IsError;
 
-        public Form1()
+        public View()
         {
             InitializeComponent();
-
-            var filename = "data.json";
-
-            if(!File.Exists(filename))
-            {
-                MessageBox.Show($"Die Datei {filename} konnte nicht gefunden werden.", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Application.Exit();
-            }
-
-            var jsonString = File.ReadAllText(filename);
-            m_LocationData = JsonSerializer.Deserialize<List<CountryData>>(jsonString);
+            ReadJsonData();
+            InitMaskedTextbox();
+            InitDictionary();
 
             m_AppointmentFinder = new VaccinationAppointmentFinder();
+            btnStart.Enabled = false;
+            btnStop.Enabled = false;
+        }
 
+        private void InitDictionary()
+        {
             var dict = new Dictionary<CountryData, string>();
             foreach (var location in m_LocationData)
             {
@@ -41,10 +38,47 @@ namespace ImpfTerminBot.Forms
             cbCountry.DisplayMember = "Value";
             cbCountry.ValueMember = "Key";
             cbCountry.SelectedIndex = 0;
-
-            btnStart.Enabled = false;
-            btnStop.Enabled = false;
         }
+
+        private void ReadJsonData()
+        {
+            var filename = "data.json";
+            if (!File.Exists(filename))
+            {
+                MessageBox.Show($"Die Datei {filename} konnte nicht gefunden werden.", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+            }
+            var jsonString = File.ReadAllText(filename);
+            m_LocationData = JsonSerializer.Deserialize<List<CountryData>>(jsonString);
+        }
+
+        private void InitMaskedTextbox()
+        {
+            mtbCode.Mask = ">AAAA-AAAA-AAAA";
+            mtbCode.MaskInputRejected += new MaskInputRejectedEventHandler(mtb_Code_MaskInputRejected);
+            mtbCode.KeyDown += new KeyEventHandler(mtb_Code_KeyDown);
+        }
+
+        void mtb_Code_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        {
+            if (mtbCode.MaskFull)
+            {
+            }
+            else if (e.Position == mtbCode.Mask.Length)
+            {
+            }
+            else
+            {
+                toolTip1.ToolTipTitle = "Eingabe ungültig";
+                toolTip1.Show("Nur Buchstaben oder Zahlen sind zulässig.", mtbCode, 0, -20, 5000);
+            }
+        }
+
+        void mtb_Code_KeyDown(object sender, KeyEventArgs e)
+        {
+            toolTip1.Hide(mtbCode);
+        }
+
 
         private void cbCountry_SelectionChanged(object sender, EventArgs e)
         {
@@ -64,12 +98,14 @@ namespace ImpfTerminBot.Forms
 
         private void tbCode_TextChanged(object sender, EventArgs e)
         {
-            if(tbCode.Text.Length == 14)
+            mtbCode.Text = mtbCode.Text.Trim();
+
+            if (mtbCode.MaskCompleted)
             {
                 cbCenter.Enabled = true;
                 cbCountry.Enabled = true;
                 btnStart.Enabled = true;
-                m_Code = tbCode.Text;
+                m_Code = mtbCode.Text;
             }
             else
             {
@@ -138,7 +174,7 @@ namespace ImpfTerminBot.Forms
 
         private void EnableControls(bool b)
         {
-            tbCode.Enabled = b;
+            mtbCode.Enabled = b;
             cbCenter.Enabled = b;
             cbCountry.Enabled = b;
             btnStart.Enabled = b;

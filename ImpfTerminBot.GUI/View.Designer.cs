@@ -1,7 +1,7 @@
 ﻿
 namespace ImpfTerminBot.Forms
 {
-    partial class Form1
+    partial class View
     {
         /// <summary>
         ///  Required designer variable.
@@ -29,19 +29,21 @@ namespace ImpfTerminBot.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(View));
             this.btnStart = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.cbCenter = new System.Windows.Forms.ComboBox();
-            this.tbCode = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.cbCountry = new System.Windows.Forms.ComboBox();
+            this.mtbCode = new System.Windows.Forms.MaskedTextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.btnStop = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -77,10 +79,10 @@ namespace ImpfTerminBot.Forms
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 76.75963F));
             this.tableLayoutPanel2.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.cbCenter, 1, 2);
-            this.tableLayoutPanel2.Controls.Add(this.tbCode, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.label3, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.label2, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.cbCountry, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.mtbCode, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 19);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -112,15 +114,6 @@ namespace ImpfTerminBot.Forms
             this.cbCenter.Size = new System.Drawing.Size(397, 23);
             this.cbCenter.TabIndex = 12;
             // 
-            // tbCode
-            // 
-            this.tbCode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbCode.Location = new System.Drawing.Point(125, 11);
-            this.tbCode.Name = "tbCode";
-            this.tbCode.Size = new System.Drawing.Size(397, 23);
-            this.tbCode.TabIndex = 10;
-            this.tbCode.TextChanged += new System.EventHandler(this.tbCode_TextChanged);
-            // 
             // label3
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -151,6 +144,15 @@ namespace ImpfTerminBot.Forms
             this.cbCountry.Size = new System.Drawing.Size(397, 23);
             this.cbCountry.TabIndex = 7;
             this.cbCountry.SelectedIndexChanged += new System.EventHandler(this.cbCountry_SelectionChanged);
+            // 
+            // mtbCode
+            // 
+            this.mtbCode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.mtbCode.Location = new System.Drawing.Point(125, 11);
+            this.mtbCode.Name = "mtbCode";
+            this.mtbCode.Size = new System.Drawing.Size(397, 23);
+            this.mtbCode.TabIndex = 13;
+            this.mtbCode.TextChanged += new System.EventHandler(this.tbCode_TextChanged);
             // 
             // tableLayoutPanel1
             // 
@@ -194,7 +196,7 @@ namespace ImpfTerminBot.Forms
             this.btnStop.UseVisualStyleBackColor = true;
             this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
-            // Form1
+            // View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -202,7 +204,7 @@ namespace ImpfTerminBot.Forms
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(553, 248);
-            this.Name = "Form1";
+            this.Name = "View";
             this.Text = "ImpfTerminBot";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.groupBox1.ResumeLayout(false);
@@ -219,7 +221,6 @@ namespace ImpfTerminBot.Forms
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ComboBox cbCenter;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox tbCode;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbCountry;
@@ -227,6 +228,8 @@ namespace ImpfTerminBot.Forms
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Button btnStop;
+        private System.Windows.Forms.MaskedTextBox mtbCode;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 
