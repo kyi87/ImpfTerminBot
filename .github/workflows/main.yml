@@ -25,14 +25,24 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore 
 
-    - name: Publish ImpfTerminBot.Forms
+    - name: Publish ImpfTerminBot.GUI
       if: ${{ always() }}
-      run: dotnet publish ${{ github.workspace }}/ImpfTerminBot.Forms/ImpfTerminBot.Forms.csproj --configuration Release 
+      run: dotnet publish ${{ github.workspace }}/ImpfTerminBot.GUI/ImpfTerminBot.GUI.csproj --configuration Release 
 
-    - name: Upload ImpfTerminBot.Forms Build Artifact
+    - name: Upload ImpfTerminBot.GUI Build Artifact
       if: ${{ always() }}
       uses: actions/upload-artifact@v2
       with:
-        name: ImpfTerminBot.Forms
-        path: ${{ github.workspace }}/ImpfTerminBot.Forms/bin/Release/netcoreapp3.1/publish/
-    
+        name: ImpfTerminBot.GUI
+        path: ${{ github.workspace }}/ImpfTerminBot.GUI/bin/Release/netcoreapp3.1/publish/
+        
+    - name: Zip Files
+      run: Compress-Archive ${{ github.workspace }}/ImpfTerminBot.GUI/bin/Release/netcoreapp3.1/publish/ ImpfTerminBot.zip
+        
+    - uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "latest"
+        prerelease: false
+        title: "ImpfTerminBot Release"
+        files: ImpfTerminBot.zip
