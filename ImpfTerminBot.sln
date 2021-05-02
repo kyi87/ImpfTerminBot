@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImpfTerminBot.GUI", "ImpfTe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImpfTerminBot", "ImpfTerminBot\ImpfTerminBot.csproj", "{EC9B018D-13C4-4B1E-902C-9EBC1E4F817B}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ImpfTerminBot.Installer", "ImpfTerminBot.Installer\ImpfTerminBot.Installer.vdproj", "{A797E9EC-D3F7-4E4F-BC86-9DE24A52F83B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,8 @@ Global
 		{EC9B018D-13C4-4B1E-902C-9EBC1E4F817B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC9B018D-13C4-4B1E-902C-9EBC1E4F817B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC9B018D-13C4-4B1E-902C-9EBC1E4F817B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A797E9EC-D3F7-4E4F-BC86-9DE24A52F83B}.Debug|Any CPU.ActiveCfg = Debug
+		{A797E9EC-D3F7-4E4F-BC86-9DE24A52F83B}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
