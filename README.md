@@ -37,5 +37,5 @@ Der Vermittlungscode muss gültig sein und zum Bundsesland und zum Impfzentrum p
 - [ ] Unsterstützung für weitere Browser
 
 ## Unterstützung
-<a href="https://www.buymeacoffee.com/roniemartinez" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+<a href="https://www.buymeacoffee.com/kyi87" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
 
