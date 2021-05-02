@@ -7,10 +7,10 @@ Der ImpfTerminBot erleichtert die Terminsuche für eine Corona-Schutzimpung übe
 
 ## Anleitung
 ### Installation
-Die Datei ImpfTerminBot.zip entpacken. 
+Die Datei ImpfTerminBot.msi ausführen und den gewünschten Installations-Pfad wählen. Es wird automatisch eine Desktopverknüpfung erstellt.
 
 ### Starten der Terminsuche
-Um die Terminsuche zu starten muss die Datei "ImpfTerminBot.exe" ausgeführt werden. Anschließend müssen die benötigten Daten eingetragen werden:
+Um die Terminsuche zu starten muss die Desktopverknüpfung "ImpfTerminBot" ausgeführt werden. Anschließend müssen die benötigten Daten eingetragen werden:
 
 -  Vermittlungscode
 -  Bundesland (Bisher gibt es nur für Baden-Württemberg Einträge.)
