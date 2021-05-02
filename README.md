@@ -1,6 +1,6 @@
 # ImpfTerminBot
 
-Der ImpfTerminBot erleichtert die Terminsuche für eine Corona-Schutzimpung über das Portal [https://www.impfterminservice.de](https://www.impfterminservice.de). Der ImpfTerminBot steuert hierbei den Browser vollautomatisch und meldet sich sobald ein Termin gefunden wurde. Hier beendet der ImpfTerminBot seine Arbeit und der Benutzer übernimmt die Dateneingabe.
+Der ImpfTerminBot erleichtert die teils langwierige Terminsuche für eine Corona-Schutzimpung über das Portal [https://www.impfterminservice.de](https://www.impfterminservice.de). Der ImpfTerminBot steuert hierbei den Browser vollautomatisch, so dass der Benutzer nicht am PC warten muss um den nächsten Schritt auf der Seite ausführen zu können. Sobald ein Termin gefunden wurde meldet sich der Bot mit einem akustischen Signal. Hier beendet der ImpfTerminBot seine Arbeit und der Benutzer übernimmt die Dateneingabe.
 
 ## Download 
 [ImpfTerminBot.msi](https://github.com/kyi87/ImpfTerminBot/releases/download/Latest/ImpfTerminBot.msi)
@@ -35,3 +35,7 @@ Der Vermittlungscode muss gültig sein und zum Bundsesland und zum Impfzentrum p
 ## TODO
 - [ ] data.json für andere Bundesländer / Impfzentren erweitern
 - [ ] Unsterstützung für weitere Browser
+
+## Unterstützung
+<a href="https://www.buymeacoffee.com/roniemartinez" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+
