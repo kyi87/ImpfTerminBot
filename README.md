@@ -1,16 +1,16 @@
 # ImpfTerminBot
 
-Der ImpfTerminBot erleichtert die Terminsuche für eine Corona-Schutzimpung über das Portal [https://www.impfterminservice.de](https://www.impfterminservice.de). Der ImpfTerminBot steuert hierbei den Browser vollautomatisch und meldet sich sobald ein Termin gefunden wurde. Hier beendet der ImpfTerminBot seine Arbeit und der Benutzer übernimmt die Dateneingabe.
+Der ImpfTerminBot erleichtert die teils langwierige Terminsuche für eine Corona-Schutzimpung über das Portal [https://www.impfterminservice.de](https://www.impfterminservice.de). Der ImpfTerminBot steuert hierbei den Browser vollautomatisch, so dass der Benutzer nicht am PC warten muss um den nächsten Schritt auf der Seite ausführen zu können. Sobald ein Termin gefunden wurde meldet sich der Bot mit einem akustischen Signal. Hier beendet der ImpfTerminBot seine Arbeit und der Benutzer übernimmt die Dateneingabe.
 
 ## Download 
-[ImpfTerminBot.zip](https://github.com/kyi87/ImpfTerminBot/releases/download/latest/ImpfTerminBot.zip)
+[ImpfTerminBot.msi](https://github.com/kyi87/ImpfTerminBot/releases/download/Latest/ImpfTerminBot.msi)
 
 ## Anleitung
 ### Installation
-Die Datei ImpfTerminBot.zip entpacken. 
+Die Datei ImpfTerminBot.msi ausführen und den gewünschten Installations-Pfad wählen. Falls nicht vorhanden muss zuerst die .Net Runtime installiert werden ([.NetCore 3.1 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/thank-you/runtime-desktop-3.1.14-windows-x86-installer)). Nach der Installation wird automatisch eine Desktopverknüpfung erstellt.
 
 ### Starten der Terminsuche
-Um die Terminsuche zu starten muss die Datei "ImpfTerminBot.exe" ausgeführt werden. Anschließend müssen die benötigten Daten eingetragen werden:
+Um die Terminsuche zu starten muss die Desktopverknüpfung "ImpfTerminBot" ausgeführt werden. Anschließend müssen die benötigten Daten eingetragen werden:
 
 -  Vermittlungscode
 -  Bundesland (Bisher gibt es nur für Baden-Württemberg Einträge.)
@@ -30,8 +30,12 @@ Der Vermittlungscode muss gültig sein und zum Bundsesland und zum Impfzentrum p
 - Nur unter Windows (10) lauffähig
 - Google Chrome muss installiert sein (Momentan wird nur Google Chrome unterstützt)
 - Es muss ein gültiger Vermittlungscode vorhanden sein
-- .NetCore 3.1 Desktop Runtime: https://dotnet.microsoft.com/download/dotnet/thank-you/runtime-desktop-3.1.14-windows-x64-installer
+- [.NetCore 3.1 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/thank-you/runtime-desktop-3.1.14-windows-x86-installer)
 
 ## TODO
 - [ ] data.json für andere Bundesländer / Impfzentren erweitern
 - [ ] Unsterstützung für weitere Browser
+
+## Unterstützung
+<a href="https://www.buymeacoffee.com/kyi87" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+
