@@ -141,7 +141,7 @@ namespace ImpfTerminBot.Forms
             catch (Exception ex)
             {
                 SystemSounds.Exclamation.Play();
-                MessageBox.Show($"Es ist ein Fehler aufgetreten: {ex.Message}. Programm wird beendet.", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Es ist ein Fehler aufgetreten: {ex.Message}", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
