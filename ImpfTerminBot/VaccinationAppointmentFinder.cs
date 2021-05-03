@@ -87,6 +87,14 @@ namespace ImpfTerminBot
                             m_Driver.Navigate().GoToUrl(m_StartUrl);
                         }
                     }
+                    if (PageContains("Es ist ein interner Fehler aufgetreten"))
+                    {
+                        m_Driver.Navigate().GoToUrl(m_StartUrl);
+                    }
+                    if (PageContains("Es ist ein unerwarteter Fehler aufgetreten"))
+                    {
+                        m_Driver.Navigate().GoToUrl(m_StartUrl);
+                    }
                 }
                 catch (Exception e)
                 {
