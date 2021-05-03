@@ -3,7 +3,7 @@
 Der ImpfTerminBot erleichtert die teils langwierige Terminsuche für eine Corona-Schutzimpung über das Portal [https://www.impfterminservice.de](https://www.impfterminservice.de). Der ImpfTerminBot steuert hierbei den Browser vollautomatisch, so dass der Benutzer nicht am PC warten muss um den nächsten Schritt auf der Seite ausführen zu können. Sobald ein Termin gefunden wurde meldet sich der Bot mit einem akustischen Signal. Hier beendet der ImpfTerminBot seine Arbeit und der Benutzer übernimmt die Dateneingabe. 
 
 ## Download 
-[ImpfTerminBot.msi](https://github.com/kyi87/ImpfTerminBot/releases/latest/downloadImpfTerminBot.msi)
+[ImpfTerminBot.msi](https://github.com/kyi87/ImpfTerminBot/releases/latest/download/ImpfTerminBot.msi)
 
 ## Anleitung
 ### Installation
