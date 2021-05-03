@@ -23,18 +23,26 @@ namespace ImpfTerminBot
 
         public async Task<bool> Search(string code, string country, CenterData centerData)
         {
-            m_Country = country;
-            m_Code = code;
-            m_CenterData = centerData;
+            try
+            {
+                m_Country = country;
+                m_Code = code;
+                m_CenterData = centerData;
 
-            m_Driver = new ChromeDriver();
+                m_Driver = new ChromeDriver();
 
-            var postcode = m_CenterData.Postcode;
-            m_StartUrl = $"https://001-iz.impfterminservice.de/impftermine/suche/{code}/{postcode}";
-            m_Driver.Navigate().GoToUrl(m_StartUrl);
+                var postcode = m_CenterData.Postcode;
+                m_StartUrl = $"https://001-iz.impfterminservice.de/impftermine/suche/{code}/{postcode}";
+                m_Driver.Navigate().GoToUrl(m_StartUrl);
 
-            m_IsSearching = true;
-            return await SelectPage();
+                m_IsSearching = true;
+                return await SelectPage();
+            }
+            catch (Exception)
+            {
+                m_IsSearching = false;
+                throw;
+            }
         }
 
         public void StopSearch()

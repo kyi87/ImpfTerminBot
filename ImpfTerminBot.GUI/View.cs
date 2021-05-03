@@ -13,7 +13,6 @@ namespace ImpfTerminBot.Forms
         private List<CountryData> m_LocationData;
         private VaccinationAppointmentFinder m_AppointmentFinder;
         private string m_Code;
-        private bool m_IsError;
 
         public View()
         {
@@ -141,10 +140,8 @@ namespace ImpfTerminBot.Forms
             }
             catch (Exception ex)
             {
-                m_IsError = true;
                 SystemSounds.Exclamation.Play();
                 MessageBox.Show($"Es ist ein Fehler aufgetreten: {ex.Message}. Programm wird beendet.", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Application.Exit();
             }
             finally
             {
@@ -182,7 +179,7 @@ namespace ImpfTerminBot.Forms
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(m_AppointmentFinder.IsSearching() && !m_IsError)
+            if(m_AppointmentFinder.IsSearching())
             {
                 DialogResult result = MessageBox.Show("Soll der Browser geschlossen werden? Alle eingegebenen Daten gehen verloren.", "Browser schließen", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
                 if (result == DialogResult.Yes)
