@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
-using Microsoft.Edge.SeleniumTools;
 using ImpfTerminBot.GUI.Model;
 
 namespace ImpfTerminBot
@@ -65,13 +64,6 @@ namespace ImpfTerminBot
                         var firefoxOptions = new FirefoxOptions();
                         firefoxOptions.AcceptInsecureCertificates = true;
                         driver = new FirefoxDriver(geckoService, firefoxOptions);
-                        break;
-                    }
-                case eBrowserType.Edge:
-                    {
-                        var options = new EdgeOptions();
-                        options.UseChromium = true;
-                        driver = new EdgeDriver(options);
                         break;
                     }
                 default:
