@@ -38,7 +38,22 @@ Der ImpfTerminBot meldet sich akustisch sobald ein Termin gefunden wurde. Die Da
 | Ungültiger Vermittlungscode                                  | Der Vermittlungscode muss gültig sein und zum Bundesland und zum Impfzentrum passen. |
 | Anspruch abgelaufen. Vermittlungscode ist nicht mehr gültig. | Der Vermittlungscode wurde bereits benutzt und ist somit nicht mehr einsetzbar. |
 
-## Vorraussetzungen
+## Einstellungen
+
+### Browser
+
+Es stehen Chrome und Firefox als Browser zur Wahl. Der jeweilige Browser muss installiert sein.
+
+### Servernummer
+
+Die Servernummer gibt die Nummer am Anfang der Url an, die verwendet wird. Möglicherweise kann beim Wechsel der Servernummer schneller ein Termin gefunden werden, da die Server unterschiedlich stark ausgelastet sind.
+
+![ServerNummer](doc/ServerNummer.png)
+
+Falls ein Server nicht arbeitet kommt eine Meldung und der Benutzer muss eine andere Servernummer wählen.
+
+## Voraussetzungen
+
 - **Betriebssystem:** Nur unter Windows (10) lauffähig
 - **Browser:** Google Chrome muss installiert sein (momentan wird nur Google Chrome unterstützt)
 - **Laufzeitumgebung:** [.NetCore 3.1 Desktop Runtime x64](https://dotnet.microsoft.com/download/dotnet/thank-you/runtime-desktop-3.1.14-windows-x64-installer)
