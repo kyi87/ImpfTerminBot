@@ -21,7 +21,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_47754FD23ACC4C7EAB1C62C477853BA2"
+        "MsmKey" = "8:_3C43646336DC441FB4726B3FE0B78F8D"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_47B468458F0A409EBD9AB7A54970787E"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -170,6 +176,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3C43646336DC441FB4726B3FE0B78F8D"
+            {
+            "SourcePath" = "8:..\\bin\\geckodriver.exe"
+            "TargetName" = "8:geckodriver.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_4B049B3F8F954EE88F61F4C0617D4773"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -178,7 +204,7 @@
         {
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_4B049B3F8F954EE88F61F4C0617D4773"
             {
-            "DefaultLocation" = "8:[ProgramFiles64Folder][Manufacturer]\\[ProductName]"
+            "DefaultLocation" = "8:[ProgramFiles64Folder]\\[ProductName]"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -226,15 +252,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:ImpfTerminBot"
-        "ProductCode" = "8:{6007DECB-EB8F-4B8A-9B84-3432F138CE72}"
-        "PackageCode" = "8:{EB0FD517-8ABF-495D-B96D-BDF9EB8303D5}"
+        "ProductCode" = "8:{340B59F5-C171-4D9E-8AE8-F68E9FF261CE}"
+        "PackageCode" = "8:{E4E13F30-4999-4C27-A6D0-8FAB747F68B9}"
         "UpgradeCode" = "8:{9E0ED29F-B276-4B87-BB08-DD5C84E828D3}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.2"
+        "ProductVersion" = "8:1.1.0"
         "Manufacturer" = "8:kyi"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://kyi87.github.io/ImpfTerminBot/"
@@ -347,7 +373,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_6B5CB0CE6D0542D3A9B76AF733AC5C86"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_94F3FA8A7CAD4CB891DC872FE54188B9"
             {
             "Name" = "8:ImpfTerminBot"
             "Arguments" = "8:"
@@ -355,7 +381,7 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_47754FD23ACC4C7EAB1C62C477853BA2"
+            "Target" = "8:_47B468458F0A409EBD9AB7A54970787E"
             "Folder" = "8:_B0212BA71B114D80B6E9BA5DE63CF2A4"
             "WorkingFolder" = "8:_4B049B3F8F954EE88F61F4C0617D4773"
             "Icon" = "8:_2D16961FF54F4974AF97FAD7E95DBFA6"
@@ -760,9 +786,9 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_47754FD23ACC4C7EAB1C62C477853BA2"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_47B468458F0A409EBD9AB7A54970787E"
             {
-            "SourcePath" = "8:..\\ImpfTerminBot.GUI\\obj\\x64\\Release\\netcoreapp3.1\\apphost.exe"
+            "SourcePath" = "8:..\\ImpfTerminBot.GUI\\obj\\x64\\Release\\netcoreapp3.1\\win-x64\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_4B049B3F8F954EE88F61F4C0617D4773"
@@ -780,10 +806,11 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:Release|x64"
+            "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:PublishItems"
             "OutputProjectGuid" = "8:{AD072666-0B55-4535-B478-65280E1FACA0}"
             "ShowKeyOutput" = "11:TRUE"
+            "PublishProfilePath" = "8:Properties\\PublishProfiles\\FolderProfile.pubxml"
                 "ExcludeFilters"
                 {
                 }
