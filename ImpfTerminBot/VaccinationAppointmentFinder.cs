@@ -95,12 +95,12 @@ namespace ImpfTerminBot
 
                         if (PageContains("Ungültiger Vermittlungscode"))
                         {
-                            throw new CodeNotValidException("Ungültiger Vermittlungscode");
+                            throw new CodeNotValidException("Ungültiger Vermittlungscode.");
                         }
 
                         if (PageContains("Anspruch abgelaufen"))
                         {
-                            throw new CodeNotValidException("Anspruch abgelaufen. Vermittlungscode ist nicht mehr gültig");
+                            throw new CodeNotValidException("Anspruch abgelaufen. Vermittlungscode ist nicht mehr gültig.");
                         }
 
                         if(PageContains("Derzeit keine Onlinebuchung von Impfterminen"))

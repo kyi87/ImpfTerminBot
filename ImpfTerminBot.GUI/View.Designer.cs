@@ -247,7 +247,7 @@ namespace ImpfTerminBot.Forms
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(116, 15);
             this.label5.TabIndex = 5;
-            this.label5.Text = "Server-Nummer:";
+            this.label5.Text = "Servernummer:";
             // 
             // label4
             // 
@@ -264,7 +264,7 @@ namespace ImpfTerminBot.Forms
             this.tableLayoutPanel5.ColumnCount = 3;
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 46.90266F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 53.09734F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 175F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 176F));
             this.tableLayoutPanel5.Controls.Add(this.rbChrome, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.rbFirefox, 1, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -282,7 +282,7 @@ namespace ImpfTerminBot.Forms
             this.rbChrome.Checked = true;
             this.rbChrome.Location = new System.Drawing.Point(3, 9);
             this.rbChrome.Name = "rbChrome";
-            this.rbChrome.Size = new System.Drawing.Size(98, 19);
+            this.rbChrome.Size = new System.Drawing.Size(97, 19);
             this.rbChrome.TabIndex = 5;
             this.rbChrome.TabStop = true;
             this.rbChrome.Text = "Chrome";
@@ -292,7 +292,7 @@ namespace ImpfTerminBot.Forms
             // 
             this.rbFirefox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.rbFirefox.AutoSize = true;
-            this.rbFirefox.Location = new System.Drawing.Point(107, 9);
+            this.rbFirefox.Location = new System.Drawing.Point(106, 9);
             this.rbFirefox.Name = "rbFirefox";
             this.rbFirefox.Size = new System.Drawing.Size(111, 19);
             this.rbFirefox.TabIndex = 10;
