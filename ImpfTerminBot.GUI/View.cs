@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Windows.Forms;
 using System.Media;
 using ImpfTerminBot.Model;
+using ImpfTerminBot.GUI.Model;
 
 namespace ImpfTerminBot.Forms
 {
@@ -54,11 +55,11 @@ namespace ImpfTerminBot.Forms
         private void InitMaskedTextbox()
         {
             mtbCode.Mask = ">AAAA-AAAA-AAAA";
-            mtbCode.MaskInputRejected += new MaskInputRejectedEventHandler(mtb_Code_MaskInputRejected);
-            mtbCode.KeyDown += new KeyEventHandler(mtb_Code_KeyDown);
+            mtbCode.MaskInputRejected += new MaskInputRejectedEventHandler(mtbCode_MaskInputRejected);
+            mtbCode.KeyDown += new KeyEventHandler(mtbCode_KeyDown);
         }
 
-        void mtb_Code_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        void mtbCode_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
         {
             if (mtbCode.MaskFull)
             {
@@ -73,11 +74,10 @@ namespace ImpfTerminBot.Forms
             }
         }
 
-        void mtb_Code_KeyDown(object sender, KeyEventArgs e)
+        void mtbCode_KeyDown(object sender, KeyEventArgs e)
         {
             toolTip1.Hide(mtbCode);
         }
-
 
         private void cbCountry_SelectionChanged(object sender, EventArgs e)
         {
@@ -120,22 +120,30 @@ namespace ImpfTerminBot.Forms
             try
             {
                 btnStop.Enabled = true;
+                EnableControls(false);
+
+                var browser = GetBrowserType();
+                var serverNr = (int)nudServerNr.Value;
                 var country = ((KeyValuePair<CountryData, string>)cbCountry.SelectedItem).Key;
                 var center = ((KeyValuePair<CenterData, string>)cbCenter.SelectedItem).Key;
 
-                EnableControls(false);
-                var isSuccess = await m_AppointmentFinder.Search(m_Code, country.Country, center);
-
-                if(isSuccess)
+                var isSuccess = await m_AppointmentFinder.Search(browser, serverNr, m_Code, country.Country, center);
+                if (isSuccess)
                 {
                     PlaySound();
                     MessageBox.Show("Bitte Daten im Browser eingeben.", "Termin gefunden.", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
-            catch(CodeNotValidException ex)
+            catch (CodeNotValidException ex)
             {
                 SystemSounds.Exclamation.Play();
                 MessageBox.Show($"{ex.Message}", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                m_AppointmentFinder.CloseBrowser();
+            }
+            catch (ServerNotWorkingException ex)
+            {
+                SystemSounds.Exclamation.Play();
+                MessageBox.Show($"{ex.Message}", "Server nicht aktiv", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 m_AppointmentFinder.CloseBrowser();
             }
             catch (Exception ex)
@@ -148,6 +156,21 @@ namespace ImpfTerminBot.Forms
                 EnableControls(true);
                 btnStop.Enabled = false;
             }
+        }
+
+        private eBrowserType GetBrowserType()
+        {
+            eBrowserType browser = eBrowserType.None;
+            if (rbChrome.Checked)
+            {
+                browser = eBrowserType.Chrome;
+            }
+            else if (rbFirefox.Checked)
+            {
+                browser = eBrowserType.Firefox;
+            }
+
+            return browser;
         }
 
         private void btnStop_Click(object sender, EventArgs e)
@@ -175,6 +198,9 @@ namespace ImpfTerminBot.Forms
             cbCenter.Enabled = b;
             cbCountry.Enabled = b;
             btnStart.Enabled = b;
+            rbChrome.Enabled = b;
+            rbFirefox.Enabled = b;
+            nudServerNr.Enabled = b;
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)

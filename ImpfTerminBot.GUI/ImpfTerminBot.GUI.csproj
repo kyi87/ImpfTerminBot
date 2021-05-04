@@ -4,7 +4,6 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <PublishChromeDriver>true</PublishChromeDriver>
     <AssemblyName>ImpfTerminBot</AssemblyName>
     <ApplicationIcon>syringe_medical_10730.ico</ApplicationIcon>
@@ -29,6 +28,8 @@
 
   <ItemGroup>
     <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="90.0.4430.2400" />
+    <PackageReference Include="Selenium.WebDriver.GeckoDriver" Version="0.29.1" />
+    <PackageReference Include="Selenium.WebDriver.MSEdgeDriver" Version="90.0.818.42" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,5 +41,4 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
 </Project>
