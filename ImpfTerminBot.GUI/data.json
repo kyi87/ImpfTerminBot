@@ -3,6 +3,10 @@
     "Country": "Baden-Württemberg",
     "Centers": [
       {
+        "CenterName": "68163 Mannheim, Maimarkthalle",
+        "Postcode": "68163"
+      },
+      {
         "CenterName": "69123 Heidelberg, Gesellschaftshaus Pfaffengrund",
         "Postcode": "69123"
       },
