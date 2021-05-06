@@ -50,6 +50,7 @@ namespace ImpfTerminBot.GUI
             EnableControls(true);
             btnStop.Enabled = false;
             btnStart.Text = "Termin suchen";
+            stlStatus.Text = "";
         }
 
         private void OnSearchCanceled(object sender, EventArgs e)
@@ -141,7 +142,7 @@ namespace ImpfTerminBot.GUI
             else
             {
                 toolTip1.ToolTipTitle = "Eingabe ungültig";
-                toolTip1.Show("Nur Buchstaben oder Zahlen sind zulässig.", mtbCode, 0, -20, 5000);
+                toolTip1.Show("Nur Buchstaben oder Zahlen sind zulässig.", mtbCode, 0, 20, 3000);
             }
         }
 
@@ -199,11 +200,13 @@ namespace ImpfTerminBot.GUI
                 {
                     m_AppointmentFinder.StopSearch(true);
                     btnStart.Text = "Suche fortsetzen";
+                    stlStatus.Text = "SUCHE GESTOPPT";
                 }
                 else if(m_AppointmentFinder.IsSearching() && m_AppointmentFinder.IsStopped())
                 {
                     m_AppointmentFinder.StopSearch(false);
                     btnStart.Text = "Suche stoppen";
+                    stlStatus.Text = "SUCHE LÄUFT";
                 }
                 else
                 {
@@ -214,6 +217,7 @@ namespace ImpfTerminBot.GUI
 
                     m_AppointmentFinder.SearchAsync(browser, serverNr, m_Code, country.Country, center);
                     btnStart.Text = "Suche stoppen";
+                    stlStatus.Text = "SUCHE LÄUFT";
                 }
             }
             catch (Exception ex)

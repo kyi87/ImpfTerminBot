@@ -6,6 +6,7 @@ using ImpfTerminBot.Model;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Support.UI;
 
 namespace ImpfTerminBot
 {
@@ -161,7 +162,7 @@ namespace ImpfTerminBot
                                 HandlePageCodeExist();
                             }
 
-                            if (PageContains("Termine suchen"))
+                            if (PageContains("Onlinebuchung für Ihre Corona-Schutzimpfung"))
                             {
                                 if (HandlePageAppointmentSearch())
                                 {
@@ -188,11 +189,6 @@ namespace ImpfTerminBot
                             {
                                 Thread.Sleep(100);
                             }
-                        }
-                        catch (WebDriverException e)
-                        {
-                            OnFail(new FailEventArgs() {ErrorText = e.Message});
-                            break;
                         }
                         catch (Exception e)
                         {
@@ -261,19 +257,36 @@ namespace ImpfTerminBot
             center.Click();
             Thread.Sleep(500);
 
-            var btn = m_Driver.FindElement(By.CssSelector("button[class='btn kv-btn btn-magenta text-uppercase d-inline-block']"));
+            var btnSelector = By.CssSelector("button[class='btn kv-btn btn-magenta text-uppercase d-inline-block']");
+            ClickButton(btnSelector);
+        }
+
+        private void ClickButton(By btnSelector)
+        {
+            var wait = new WebDriverWait(m_Driver, TimeSpan.FromSeconds(15));
+            wait.Until(ExpectedConditions.ElementExists(btnSelector));
+            wait.Until(ExpectedConditions.ElementToBeClickable(btnSelector));
+
+            var btn = m_Driver.FindElement(btnSelector);
             btn.Click();
         }
 
         private bool HandlePageAppointmentSearch()
         {
-            var btn = m_Driver.FindElement(By.CssSelector("button[class='btn btn-magenta kv-btn kv-btn-round search-filter-button']"));
-            btn.Click();
-            Thread.Sleep(m_SuccessWaitTime_ms);
+            try
+            {
+                var btnSelector = By.CssSelector("button[class='btn btn-magenta kv-btn kv-btn-round search-filter-button']");
+                ClickButton(btnSelector);
 
-            var isSuccess = Exists(By.XPath("//*[contains(., '1. Impftermin')]")) && 
-                            !Exists(By.XPath("//*[contains(., 'Derzeit stehen leider keine Termine zur Verfügung.')]"));
-            return isSuccess;
+                Thread.Sleep(m_SuccessWaitTime_ms);
+                var isSuccess = Exists(By.XPath("//*[contains(., '1. Impftermin')]")) &&
+                                !Exists(By.XPath("//*[contains(., 'Derzeit stehen leider keine Termine zur Verfügung.')]"));
+                return isSuccess;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
 
         private void HandlePageCodeExist()
@@ -287,10 +300,10 @@ namespace ImpfTerminBot
             text1.SendKeys(m_Code);
             Thread.Sleep(500);
 
-            var btn = m_Driver.FindElement(By.CssSelector("button[class='btn kv-btn btn-magenta text-uppercase d-inline-block']"));
-            btn.Click();
-            Thread.Sleep(500);
+            var btnSelector = By.CssSelector("button[class='btn kv-btn btn-magenta text-uppercase d-inline-block']");
+            ClickButton(btnSelector);
 
+            Thread.Sleep(500);
             if (Exists(By.XPath("//*[contains(., 'Es ist ein unerwarteter Fehler aufgetreten')]")))
             {
                 Thread.Sleep(2000);
