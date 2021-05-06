@@ -1,4 +1,4 @@
-﻿namespace ImpfTerminBot
+﻿namespace ImpfTerminBot.Model
 {
     public class CenterData
     {

@@ -1,14 +1,15 @@
-﻿using ImpfTerminBot.Model;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using ImpfTerminBot.ErrorHandling;
+using ImpfTerminBot.Model;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
-using ImpfTerminBot.GUI.Model;
 
 namespace ImpfTerminBot
 {
+
     public class VaccinationAppointmentFinder
     {
         private string m_Code;
@@ -17,13 +18,40 @@ namespace ImpfTerminBot
         private CenterData m_CenterData;
         private IWebDriver m_Driver;
         private bool m_IsSearching;
+        private bool m_IsStop;
+        private int m_SuccessWaitTime_ms;
 
-        public VaccinationAppointmentFinder()
+        public event EventHandler AppointmentFound;
+        public event EventHandler SearchCanceled;
+        public event EventHandler<FailEventArgs> SearchFailed;
+
+        public VaccinationAppointmentFinder(int successWaitTime_Ms = 5000)
         {
             m_IsSearching = false;
+            m_IsStop = false;
+            m_SuccessWaitTime_ms = successWaitTime_Ms;
         }
 
-        public async Task<bool> Search(eBrowserType browserType, int server, string code, string country, CenterData centerData)
+        private void OnSuccess()
+        {
+            m_IsSearching = false;
+            m_IsStop = false;
+            AppointmentFound?.Invoke(this, null);
+        }
+
+        private void OnSearchCanceled()
+        {
+            SearchCanceled?.Invoke(this, null);
+        }
+
+        private void OnFail(FailEventArgs e)
+        {
+            m_IsSearching = false;
+            m_IsStop = false;
+            SearchFailed?.Invoke(this, e);
+        }
+
+        public void SearchAsync(eBrowserType browserType, int server, string code, string country, CenterData centerData)
         {
             try
             {
@@ -38,7 +66,8 @@ namespace ImpfTerminBot
                 m_Driver.Navigate().GoToUrl(m_StartUrl);
 
                 m_IsSearching = true;
-                return await SelectPage();
+                m_IsStop = false;
+                SearchAsync();
             }
             catch (Exception)
             {
@@ -72,72 +101,114 @@ namespace ImpfTerminBot
             return driver;
         }
 
-        public void StopSearch()
+        public void CancelSearch()
         {
             m_IsSearching = false;
+            m_IsStop = false;
+            OnSearchCanceled();
         }
 
-        public async Task<bool> SelectPage()
+        public void StopSearch(bool b)
         {
-            return await Task.Factory.StartNew(() =>
+            m_IsStop = b;
+        }
+
+        public void SearchAsync()
+        {
+            Task.Factory.StartNew(() =>
                 {
                     while (m_IsSearching)
                     {
-                        Thread.Sleep(1000);
-
-                        if (PageContains("Ungültiger Vermittlungscode"))
-                        {
-                            throw new CodeNotValidException("Ungültiger Vermittlungscode.");
-                        }
-
-                        if (PageContains("Anspruch abgelaufen"))
-                        {
-                            throw new CodeNotValidException("Anspruch abgelaufen. Vermittlungscode ist nicht mehr gültig.");
-                        }
-
-                        if(PageContains("Derzeit keine Onlinebuchung von Impfterminen"))
-                        {
-                            throw new ServerNotWorkingException("Der gewählte Server bietet derzeit keine Onlinebuchung von Impfterminen. Bitte andere Server-Nummer wählen.");
-                        }
-
                         try
                         {
+                            Thread.Sleep(1000);
+
+                            if (PageContains("Ungültiger Vermittlungscode"))
+                            {
+                                var errMsg = "Ungültiger Vermittlungscode.";
+                                OnFail(new FailEventArgs() { ErrorText = errMsg, eErrorType = eErrorType.CodeNotValid });
+                                break;
+                            }
+
+                            if (PageContains("Anspruch abgelaufen"))
+                            {
+                                var errMsg = "Anspruch abgelaufen. Vermittlungscode ist nicht mehr gültig.";
+                                OnFail(new FailEventArgs() { ErrorText = errMsg, eErrorType = eErrorType.CodeNotValid });
+                                break;
+                            }
+
+                            if(PageContains("Derzeit keine Onlinebuchung von Impfterminen"))
+                            {
+                                var errMsg = "Der gewählte Server bietet derzeit keine Onlinebuchung von Impfterminen. Bitte andere Server-Nummer wählen.";
+                                OnFail(new FailEventArgs() { ErrorText = errMsg, eErrorType = eErrorType.ServerNotWorking });
+                                break;
+                            }
+
+                            if (PageContains("Wartungsarbeiten"))
+                            {
+                                var errMsg = "Es werden momentan Wartungsarbeiten durchgeführt. Bitte später erneut versuchen.";
+                                OnFail(new FailEventArgs() { ErrorText = errMsg, eErrorType = eErrorType.Maintenance });
+                                break;
+                            }
+
                             if (PageContains("Buchen Sie die Termine für Ihre Corona-Schutzimpfung"))
                             {
                                 HandlePageBooking();
                             }
+
                             if (PageContains("Vermittlungscodes bereits vorhanden"))
                             {
                                 HandlePageCodeExist();
                             }
+
                             if (PageContains("Termine suchen"))
                             {
                                 if (HandlePageAppointmentSearch())
                                 {
-                                    return true;
+                                    OnSuccess();
+                                    return;
                                 }
                                 else
                                 {
                                     m_Driver.Navigate().GoToUrl(m_StartUrl);
                                 }
                             }
+
                             if (PageContains("Es ist ein interner Fehler aufgetreten"))
                             {
                                 m_Driver.Navigate().GoToUrl(m_StartUrl);
                             }
+
                             if (PageContains("Es ist ein unerwarteter Fehler aufgetreten"))
                             {
                                 m_Driver.Navigate().GoToUrl(m_StartUrl);
                             }
+
+                            while (m_IsStop)
+                            {
+                                Thread.Sleep(100);
+                            }
+                        }
+                        catch (WebDriverException e)
+                        {
+                            OnFail(new FailEventArgs() {ErrorText = e.Message});
+                            break;
                         }
                         catch (Exception e)
                         {
-                            m_Driver.Navigate().GoToUrl(m_StartUrl);
+                            try
+                            {
+                                m_Driver.Navigate().GoToUrl(m_StartUrl);
+                            }
+                            catch (WebDriverException ex)
+                            {
+                                m_IsSearching = false;
+                                OnFail(new FailEventArgs() { ErrorText = e.Message });
+                                break;
+                            }
                         }
                     }
-
                     CloseBrowser();
-                    return false;
                 }      
             );
         }
@@ -150,6 +221,11 @@ namespace ImpfTerminBot
         public bool IsSearching()
         {
             return m_IsSearching;
+        }
+
+        public bool IsStopped()
+        {
+            return m_IsStop;
         }
 
         public bool PageContains(string text)
@@ -193,7 +269,7 @@ namespace ImpfTerminBot
         {
             var btn = m_Driver.FindElement(By.CssSelector("button[class='btn btn-magenta kv-btn kv-btn-round search-filter-button']"));
             btn.Click();
-            Thread.Sleep(2000);
+            Thread.Sleep(m_SuccessWaitTime_ms);
 
             var isSuccess = Exists(By.XPath("//*[contains(., '1. Impftermin')]")) && 
                             !Exists(By.XPath("//*[contains(., 'Derzeit stehen leider keine Termine zur Verfügung.')]"));

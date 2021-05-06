@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ImpfTerminBot.GUI.Model
+namespace ImpfTerminBot.Model
 {
     public enum eBrowserType
     {

@@ -252,15 +252,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:ImpfTerminBot"
-        "ProductCode" = "8:{340B59F5-C171-4D9E-8AE8-F68E9FF261CE}"
-        "PackageCode" = "8:{E4E13F30-4999-4C27-A6D0-8FAB747F68B9}"
+        "ProductCode" = "8:{6C18A3DF-C7DB-4416-BA8C-49EE7C50C6D0}"
+        "PackageCode" = "8:{00093EDC-7F8C-4C9B-B20F-867949990088}"
         "UpgradeCode" = "8:{9E0ED29F-B276-4B87-BB08-DD5C84E828D3}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.1.0"
+        "ProductVersion" = "8:1.1.1"
         "Manufacturer" = "8:kyi"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://kyi87.github.io/ImpfTerminBot/"
@@ -788,7 +788,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_47B468458F0A409EBD9AB7A54970787E"
             {
-            "SourcePath" = "8:..\\ImpfTerminBot.GUI\\obj\\x64\\Release\\netcoreapp3.1\\win-x64\\apphost.exe"
+            "SourcePath" = "8:..\\ImpfTerminBot.GUI\\obj\\x64\\Debug\\netcoreapp3.1\\win-x64\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_4B049B3F8F954EE88F61F4C0617D4773"

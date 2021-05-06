@@ -5,9 +5,9 @@ using System.Text.Json;
 using System.Windows.Forms;
 using System.Media;
 using ImpfTerminBot.Model;
-using ImpfTerminBot.GUI.Model;
+using ImpfTerminBot.ErrorHandling;
 
-namespace ImpfTerminBot.Forms
+namespace ImpfTerminBot.GUI
 {
     public partial class View : Form
     {
@@ -23,8 +23,79 @@ namespace ImpfTerminBot.Forms
             InitDictionary();
 
             m_AppointmentFinder = new VaccinationAppointmentFinder();
+            m_AppointmentFinder.AppointmentFound += OnSuccess;
+            m_AppointmentFinder.SearchCanceled += OnSearchCanceled;
+            m_AppointmentFinder.SearchFailed += OnFail;
+
             btnStart.Enabled = false;
             btnStop.Enabled = false;
+        }
+
+        private void OnSuccess(object sender, EventArgs e)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new MethodInvoker((() => OnSuccess(sender, e))));
+            }
+            else
+            {
+                PlaySound();
+                MessageBox.Show("Bitte Daten im Browser eingeben.", "Termin gefunden.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ResetControls();
+            }
+        }
+
+        private void ResetControls()
+        {
+            EnableControls(true);
+            btnStop.Enabled = false;
+            btnStart.Text = "Termin suchen";
+        }
+
+        private void OnSearchCanceled(object sender, EventArgs e)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new MethodInvoker((() => OnSearchCanceled(sender, e))));
+            }
+            else
+            {
+                ResetControls();
+            }
+        }
+
+        private void OnFail(object sender, FailEventArgs e)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new MethodInvoker((() => OnFail(sender, e))));
+            }
+            else
+            {
+                SystemSounds.Exclamation.Play();
+                switch (e.eErrorType)
+                {
+                    case eErrorType.Unknown:
+                    case eErrorType.CodeNotValid:
+                        {
+                            MessageBox.Show($"{e.ErrorText}", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            break;
+                        }
+                    case eErrorType.ServerNotWorking:
+                        {
+                            MessageBox.Show($"{e.ErrorText}", "Server nicht aktiv", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            break;
+                        }
+                    case eErrorType.Maintenance:
+                        {
+                            MessageBox.Show($"{e.ErrorText}", "Wartungsarbeiten", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            break;
+                        }
+                    default:
+                        break;
+                }
+                ResetControls();
+            }
         }
 
         private void InitDictionary()
@@ -104,6 +175,7 @@ namespace ImpfTerminBot.Forms
                 cbCenter.Enabled = true;
                 cbCountry.Enabled = true;
                 btnStart.Enabled = true;
+                btnStop.Enabled = true;
                 m_Code = mtbCode.Text;
             }
             else
@@ -111,50 +183,44 @@ namespace ImpfTerminBot.Forms
                 cbCenter.Enabled = false;
                 cbCountry.Enabled = false;
                 btnStart.Enabled = false;
+                btnStop.Enabled = false;
                 m_Code = "";
             }
         }
 
-        private async void btnStart_Click(object sender, EventArgs e)
+        private void btnStart_Click(object sender, EventArgs e)
         {
             try
             {
                 btnStop.Enabled = true;
                 EnableControls(false);
 
-                var browser = GetBrowserType();
-                var serverNr = (int)nudServerNr.Value;
-                var country = ((KeyValuePair<CountryData, string>)cbCountry.SelectedItem).Key;
-                var center = ((KeyValuePair<CenterData, string>)cbCenter.SelectedItem).Key;
-
-                var isSuccess = await m_AppointmentFinder.Search(browser, serverNr, m_Code, country.Country, center);
-                if (isSuccess)
+                if(m_AppointmentFinder.IsSearching() && !m_AppointmentFinder.IsStopped())
                 {
-                    PlaySound();
-                    MessageBox.Show("Bitte Daten im Browser eingeben.", "Termin gefunden.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    m_AppointmentFinder.StopSearch(true);
+                    btnStart.Text = "Suche fortsetzen";
                 }
-            }
-            catch (CodeNotValidException ex)
-            {
-                SystemSounds.Exclamation.Play();
-                MessageBox.Show($"{ex.Message}", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                m_AppointmentFinder.CloseBrowser();
-            }
-            catch (ServerNotWorkingException ex)
-            {
-                SystemSounds.Exclamation.Play();
-                MessageBox.Show($"{ex.Message}", "Server nicht aktiv", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                m_AppointmentFinder.CloseBrowser();
+                else if(m_AppointmentFinder.IsSearching() && m_AppointmentFinder.IsStopped())
+                {
+                    m_AppointmentFinder.StopSearch(false);
+                    btnStart.Text = "Suche stoppen";
+                }
+                else
+                {
+                    var browser = GetBrowserType();
+                    var serverNr = (int)nudServerNr.Value;
+                    var country = ((KeyValuePair<CountryData, string>)cbCountry.SelectedItem).Key;
+                    var center = ((KeyValuePair<CenterData, string>)cbCenter.SelectedItem).Key;
+
+                    m_AppointmentFinder.SearchAsync(browser, serverNr, m_Code, country.Country, center);
+                    btnStart.Text = "Suche stoppen";
+                }
             }
             catch (Exception ex)
             {
                 SystemSounds.Exclamation.Play();
                 MessageBox.Show($"Es ist ein Fehler aufgetreten: {ex.Message}", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                EnableControls(true);
-                btnStop.Enabled = false;
+                ResetControls();
             }
         }
 
@@ -175,7 +241,7 @@ namespace ImpfTerminBot.Forms
 
         private void btnStop_Click(object sender, EventArgs e)
         {
-            m_AppointmentFinder.StopSearch();
+            m_AppointmentFinder.CancelSearch();
         }
 
         private static void PlaySound()
@@ -197,7 +263,6 @@ namespace ImpfTerminBot.Forms
             mtbCode.Enabled = b;
             cbCenter.Enabled = b;
             cbCountry.Enabled = b;
-            btnStart.Enabled = b;
             rbChrome.Enabled = b;
             rbFirefox.Enabled = b;
             nudServerNr.Enabled = b;

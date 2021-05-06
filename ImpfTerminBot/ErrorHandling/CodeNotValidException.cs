@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace ImpfTerminBot
+namespace ImpfTerminBot.ErrorHandling
 {
     [Serializable]
     public class CodeNotValidException : Exception

@@ -1,5 +1,5 @@
 ﻿
-namespace ImpfTerminBot.Forms
+namespace ImpfTerminBot.GUI
 {
     partial class View
     {
@@ -264,7 +264,7 @@ namespace ImpfTerminBot.Forms
             this.tableLayoutPanel5.ColumnCount = 3;
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 46.90266F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 53.09734F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 176F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 177F));
             this.tableLayoutPanel5.Controls.Add(this.rbChrome, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.rbFirefox, 1, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -294,7 +294,7 @@ namespace ImpfTerminBot.Forms
             this.rbFirefox.AutoSize = true;
             this.rbFirefox.Location = new System.Drawing.Point(106, 9);
             this.rbFirefox.Name = "rbFirefox";
-            this.rbFirefox.Size = new System.Drawing.Size(111, 19);
+            this.rbFirefox.Size = new System.Drawing.Size(110, 19);
             this.rbFirefox.TabIndex = 10;
             this.rbFirefox.Text = "Firefox";
             this.rbFirefox.UseVisualStyleBackColor = true;
@@ -314,8 +314,10 @@ namespace ImpfTerminBot.Forms
             0,
             0});
             this.nudServerNr.Name = "nudServerNr";
-            this.nudServerNr.Size = new System.Drawing.Size(101, 23);
+            this.nudServerNr.ReadOnly = true;
+            this.nudServerNr.Size = new System.Drawing.Size(100, 23);
             this.nudServerNr.TabIndex = 6;
+            this.nudServerNr.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nudServerNr.Value = new decimal(new int[] {
             1,
             0,
