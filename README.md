@@ -24,9 +24,19 @@ Anschließend müssen die benötigten Daten eingetragen werden:
 
 Nach der Dateneingabe muss "Termin suchen" geklickt werden. Der ImpfTerminBot startet dann automatisiert die Terminsuche.
 
-### Abbrechen der Terminsuche
+### Terminsuche Stoppen /Fortsetzen und Abbrechen
 
-Beim Klick auf "Abbrechen" wird die aktuelle Suche gestoppt und der Browser wird geschlossen.
+Wenn die Suche läuft kann diese mit einem Klick auf "Suche stoppen" pausiert werden. Der Benutzer kann jetzt die Steuerung übernehmen.
+
+![SucheStoppen](doc/SucheStoppen.png)
+
+Mit "Suche fortsetzen" kann die Suche dann fortgesetzt werden.
+
+![SucheFortsetzen](doc/SucheFortsetzen.png)
+
+
+
+Beim Klick auf "Abbrechen" wird die aktuelle Suche abgebrochen und der Browser wird geschlossen.
 
 ### Termin gefunden
 Der ImpfTerminBot meldet sich akustisch sobald ein Termin gefunden wurde. Die Daten müssen dann innerhalb von 10 Minuten eingegeben werden, sonst verfällt die Terminreservierung. 

@@ -42,7 +42,7 @@ namespace ImpfTerminBot.GUI
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.btnStart = new System.Windows.Forms.Button();
-            this.btnStop = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.label5 = new System.Windows.Forms.Label();
@@ -182,7 +182,7 @@ namespace ImpfTerminBot.GUI
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 163F));
             this.tableLayoutPanel3.Controls.Add(this.btnStart, 1, 0);
-            this.tableLayoutPanel3.Controls.Add(this.btnStop, 2, 0);
+            this.tableLayoutPanel3.Controls.Add(this.btnCancel, 2, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 270);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -204,14 +204,14 @@ namespace ImpfTerminBot.GUI
             // 
             // btnStop
             // 
-            this.btnStop.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnStop.Location = new System.Drawing.Point(371, 3);
-            this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(157, 39);
-            this.btnStop.TabIndex = 2;
-            this.btnStop.Text = "Abbrechen";
-            this.btnStop.UseVisualStyleBackColor = true;
-            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            this.btnCancel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnCancel.Location = new System.Drawing.Point(371, 3);
+            this.btnCancel.Name = "btnStop";
+            this.btnCancel.Size = new System.Drawing.Size(157, 39);
+            this.btnCancel.TabIndex = 2;
+            this.btnCancel.Text = "Abbrechen";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnStop_Click);
             // 
             // groupBox2
             // 
@@ -384,7 +384,7 @@ namespace ImpfTerminBot.GUI
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Button btnStart;
-        private System.Windows.Forms.Button btnStop;
+        private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Label label4;

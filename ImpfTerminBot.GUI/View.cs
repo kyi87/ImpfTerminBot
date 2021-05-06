@@ -28,7 +28,7 @@ namespace ImpfTerminBot.GUI
             m_AppointmentFinder.SearchFailed += OnFail;
 
             btnStart.Enabled = false;
-            btnStop.Enabled = false;
+            btnCancel.Enabled = false;
         }
 
         private void OnSuccess(object sender, EventArgs e)
@@ -48,7 +48,7 @@ namespace ImpfTerminBot.GUI
         private void ResetControls()
         {
             EnableControls(true);
-            btnStop.Enabled = false;
+            btnCancel.Enabled = false;
             btnStart.Text = "Termin suchen";
             stlStatus.Text = "";
         }
@@ -176,7 +176,6 @@ namespace ImpfTerminBot.GUI
                 cbCenter.Enabled = true;
                 cbCountry.Enabled = true;
                 btnStart.Enabled = true;
-                btnStop.Enabled = true;
                 m_Code = mtbCode.Text;
             }
             else
@@ -184,7 +183,6 @@ namespace ImpfTerminBot.GUI
                 cbCenter.Enabled = false;
                 cbCountry.Enabled = false;
                 btnStart.Enabled = false;
-                btnStop.Enabled = false;
                 m_Code = "";
             }
         }
@@ -193,7 +191,7 @@ namespace ImpfTerminBot.GUI
         {
             try
             {
-                btnStop.Enabled = true;
+                btnCancel.Enabled = true;
                 EnableControls(false);
 
                 if(m_AppointmentFinder.IsSearching() && !m_AppointmentFinder.IsStopped())
