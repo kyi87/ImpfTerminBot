@@ -17,14 +17,12 @@ Um die Terminsuche zu starten muss die Desktopverknüpfung "ImpfTerminBot" ausge
 Anschließend müssen die benötigten Daten eingetragen werden:
 
 - Vermittlungscode
-
 - Servernummer aus E-Mail
-
   - Hier muss die dreistellige Servernummer, die in der Bestätigungsemail, in welcher auch der Vermittlungscode enthalten ist, eingetragen werden.
 
     **Beispiel:** Hier wäre die Servernummer "001"
 
-![DatenEingabeLeer](doc/ServernummerAusEmail.png)
+    ![DatenEingabeLeer](doc/ServernummerAusEmail.png)
 
 -  Bundesland
 -  Impfzentrum 
