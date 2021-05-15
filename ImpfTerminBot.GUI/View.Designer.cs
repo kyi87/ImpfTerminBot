@@ -118,6 +118,7 @@ namespace ImpfTerminBot.GUI
             this.cbCenter.Name = "cbCenter";
             this.cbCenter.Size = new System.Drawing.Size(437, 23);
             this.cbCenter.TabIndex = 12;
+            this.cbCenter.SelectedIndexChanged += new System.EventHandler(this.cbCenter_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -154,8 +155,8 @@ namespace ImpfTerminBot.GUI
             // 
             this.tableLayoutPanel6.ColumnCount = 3;
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 43.70709F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.11213F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.73913F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45.08009F));
             this.tableLayoutPanel6.Controls.Add(this.mtbServerNr, 2, 0);
             this.tableLayoutPanel6.Controls.Add(this.mtbCode, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.label6, 1, 0);
@@ -170,9 +171,9 @@ namespace ImpfTerminBot.GUI
             // mtbServerNr
             // 
             this.mtbServerNr.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.mtbServerNr.Location = new System.Drawing.Point(338, 6);
+            this.mtbServerNr.Location = new System.Drawing.Point(242, 6);
             this.mtbServerNr.Name = "mtbServerNr";
-            this.mtbServerNr.Size = new System.Drawing.Size(96, 23);
+            this.mtbServerNr.Size = new System.Drawing.Size(192, 23);
             this.mtbServerNr.TabIndex = 16;
             this.mtbServerNr.TextChanged += new System.EventHandler(this.mtbServerNr_TextChanged);
             // 
@@ -189,9 +190,9 @@ namespace ImpfTerminBot.GUI
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(148, 10);
+            this.label6.Location = new System.Drawing.Point(148, 3);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(184, 15);
+            this.label6.Size = new System.Drawing.Size(88, 30);
             this.label6.TabIndex = 15;
             this.label6.Text = "Servernummer aus E-Mail:";
             // 
@@ -231,9 +232,9 @@ namespace ImpfTerminBot.GUI
             // btnStart
             // 
             this.btnStart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnStart.Location = new System.Drawing.Point(197, 3);
+            this.btnStart.Location = new System.Drawing.Point(196, 3);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(188, 39);
+            this.btnStart.Size = new System.Drawing.Size(187, 39);
             this.btnStart.TabIndex = 1;
             this.btnStart.Text = "Termin suchen";
             this.btnStart.UseVisualStyleBackColor = true;
@@ -242,9 +243,9 @@ namespace ImpfTerminBot.GUI
             // btnCancel
             // 
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnCancel.Location = new System.Drawing.Point(391, 3);
+            this.btnCancel.Location = new System.Drawing.Point(389, 3);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(188, 39);
+            this.btnCancel.Size = new System.Drawing.Size(190, 39);
             this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "Abbrechen";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -291,7 +292,7 @@ namespace ImpfTerminBot.GUI
             this.tableLayoutPanel5.ColumnCount = 3;
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 46.90266F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 53.09734F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 187F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 190F));
             this.tableLayoutPanel5.Controls.Add(this.rbChrome, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.rbFirefox, 1, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -309,7 +310,7 @@ namespace ImpfTerminBot.GUI
             this.rbChrome.Checked = true;
             this.rbChrome.Location = new System.Drawing.Point(3, 3);
             this.rbChrome.Name = "rbChrome";
-            this.rbChrome.Size = new System.Drawing.Size(110, 19);
+            this.rbChrome.Size = new System.Drawing.Size(109, 19);
             this.rbChrome.TabIndex = 5;
             this.rbChrome.TabStop = true;
             this.rbChrome.Text = "Chrome";
@@ -319,9 +320,9 @@ namespace ImpfTerminBot.GUI
             // 
             this.rbFirefox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.rbFirefox.AutoSize = true;
-            this.rbFirefox.Location = new System.Drawing.Point(119, 3);
+            this.rbFirefox.Location = new System.Drawing.Point(118, 3);
             this.rbFirefox.Name = "rbFirefox";
-            this.rbFirefox.Size = new System.Drawing.Size(126, 19);
+            this.rbFirefox.Size = new System.Drawing.Size(124, 19);
             this.rbFirefox.TabIndex = 10;
             this.rbFirefox.Text = "Firefox";
             this.rbFirefox.UseVisualStyleBackColor = true;
@@ -348,6 +349,7 @@ namespace ImpfTerminBot.GUI
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.sStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(604, 327);
             this.Name = "View";
             this.Text = "ImpfTerminBot";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);

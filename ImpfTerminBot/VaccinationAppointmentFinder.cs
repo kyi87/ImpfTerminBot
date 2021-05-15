@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using ImpfTerminBot.ErrorHandling;
+using ImpfTerminBot.GUI.Model;
 using ImpfTerminBot.Model;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -10,6 +13,7 @@ using OpenQA.Selenium.Support.UI;
 
 namespace ImpfTerminBot
 {
+
     public class VaccinationAppointmentFinder
     {
         private string m_Code;
@@ -308,6 +312,29 @@ namespace ImpfTerminBot
                 Thread.Sleep(2000);
                 m_Driver.Navigate().GoToUrl(m_StartUrl);
             }
+        }
+
+        public async Task<VaccinationAppointmentResult> IsAppointmentAvailable(CenterData centerData)
+        {
+            var postCode = centerData.Postcode;
+            var url = $"https://005-iz.impfterminservice.de/rest/suche/termincheck";
+            var urlParams = $"?plz={postCode}&leistungsmerkmale=" +
+                $"{VaccinationAppointmentGlobals.VaccinesDict[eVaccines.Biontech]}," +
+                $"{VaccinationAppointmentGlobals.VaccinesDict[eVaccines.Moderna]}," +
+                $"{VaccinationAppointmentGlobals.VaccinesDict[eVaccines.AstraZeneca]}";
+
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri(url);
+
+            var response = await client.GetAsync(urlParams);
+            if (response.StatusCode != System.Net.HttpStatusCode.TooManyRequests)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+
+                var parser = new VaccinationAppointmentResultParser();
+                return  parser.Parse(content);
+            }
+            return null;
         }
     }
 }

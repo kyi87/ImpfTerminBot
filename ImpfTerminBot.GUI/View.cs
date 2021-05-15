@@ -15,19 +15,24 @@ namespace ImpfTerminBot.GUI
         private VaccinationAppointmentFinder m_AppointmentFinder;
         private string m_Code;
         private int m_ServerNr;
+        private Timer m_Timer = new Timer();
+        private bool m_ShowAppointmentAvailable;
 
         public View()
         {
-            InitializeComponent();
-            ReadJsonData();
-            InitCodeMaskedTextbox();
-            InitServerNrMaskedTextbox();
-            InitDictionary();
+            // Feature ausgeschaltet, da Abfrage der REST API nicht möglich --> Status-Code 429 (Too Many Requests)
+            m_ShowAppointmentAvailable = false;
 
             m_AppointmentFinder = new VaccinationAppointmentFinder();
             m_AppointmentFinder.AppointmentFound += OnSuccess;
             m_AppointmentFinder.SearchCanceled += OnSearchCanceled;
             m_AppointmentFinder.SearchFailed += OnFail;
+
+            InitializeComponent();
+            ReadJsonData();
+            InitCodeMaskedTextbox();
+            InitServerNrMaskedTextbox();
+            InitDictionary();
 
             btnStart.Enabled = false;
             btnCancel.Enabled = false;
@@ -135,7 +140,7 @@ namespace ImpfTerminBot.GUI
 
         private void InitServerNrMaskedTextbox()
         {
-            mtbServerNr.Mask = "000";
+            mtbServerNr.Mask = "000-iz\\.impfterminservice\\.de";
         }
 
         void mtbCode_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
@@ -179,39 +184,74 @@ namespace ImpfTerminBot.GUI
             cbCenter.SelectedIndex = 0;
         }
 
-        private void mtbCode_TextChanged(object sender, EventArgs e)
+        private async void cbCenter_SelectedIndexChanged(object sender, EventArgs e)
         {
-            mtbCode.Text = mtbCode.Text.Trim();
-
-            if (mtbCode.MaskCompleted && mtbServerNr.MaskCompleted)
+            if (m_ShowAppointmentAvailable)
             {
-                cbCenter.Enabled = true;
-                cbCountry.Enabled = true;
-                btnStart.Enabled = true;
-                m_Code = mtbCode.Text;
-                m_ServerNr = Convert.ToInt32(mtbServerNr.Text);
+                var center = ((KeyValuePair<CenterData, string>)cbCenter.SelectedItem).Key;
+                var result = await m_AppointmentFinder.IsAppointmentAvailable(center);
+                OnAppointmentAvailable(result);
+
+                if (m_Timer.Enabled)
+                {
+                    m_Timer.Stop();
+                    m_Timer.Tick -= new EventHandler(Tick);
+                }
+
+                var minutes = 5;
+                m_Timer.Interval = 1000 * 60 * minutes;
+                m_Timer.Tick += new EventHandler(Tick);
+                m_Timer.Start(); 
+            }
+        }
+
+        private async void Tick(object sender, EventArgs e)
+        {
+            var center = ((KeyValuePair<CenterData, string>)cbCenter.SelectedItem).Key;
+
+            m_Timer.Stop();
+            var result = await m_AppointmentFinder.IsAppointmentAvailable(center);
+            OnAppointmentAvailable(result);
+            m_Timer.Start();
+        }
+
+        private void OnAppointmentAvailable(VaccinationAppointmentResult result)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new MethodInvoker((() => OnAppointmentAvailable(result))));
             }
             else
             {
-                cbCenter.Enabled = false;
-                cbCountry.Enabled = false;
-                btnStart.Enabled = false;
-                m_Code = "";
-                m_ServerNr = 0;
+                if (result != null)
+                {
+                    MessageBox.Show("Termine vorhanden.");
+                }
             }
+        }
+
+        private void mtbCode_TextChanged(object sender, EventArgs e)
+        {
+            HandleMtbTextChanged();
         }
 
         private void mtbServerNr_TextChanged(object sender, EventArgs e)
         {
-            mtbCode.Text = mtbCode.Text.Trim();
+            HandleMtbTextChanged();
+        }
 
+        private void HandleMtbTextChanged()
+        {
             if (mtbCode.MaskCompleted && mtbServerNr.MaskCompleted)
             {
+                mtbCode.Text = mtbCode.Text.Trim();
+                var serverNr = mtbServerNr.Text.Substring(0, 3);
+
                 cbCenter.Enabled = true;
                 cbCountry.Enabled = true;
                 btnStart.Enabled = true;
                 m_Code = mtbCode.Text;
-                m_ServerNr = Convert.ToInt32(mtbServerNr.Text);
+                m_ServerNr = Convert.ToInt32(serverNr);
             }
             else
             {
