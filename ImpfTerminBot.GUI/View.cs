@@ -14,12 +14,14 @@ namespace ImpfTerminBot.GUI
         private List<CountryData> m_LocationData;
         private VaccinationAppointmentFinder m_AppointmentFinder;
         private string m_Code;
+        private int m_ServerNr;
 
         public View()
         {
             InitializeComponent();
             ReadJsonData();
-            InitMaskedTextbox();
+            InitCodeMaskedTextbox();
+            InitServerNrMaskedTextbox();
             InitDictionary();
 
             m_AppointmentFinder = new VaccinationAppointmentFinder();
@@ -124,15 +126,25 @@ namespace ImpfTerminBot.GUI
             m_LocationData = JsonSerializer.Deserialize<List<CountryData>>(jsonString);
         }
 
-        private void InitMaskedTextbox()
+        private void InitCodeMaskedTextbox()
         {
             mtbCode.Mask = ">AAAA-AAAA-AAAA";
             mtbCode.MaskInputRejected += new MaskInputRejectedEventHandler(mtbCode_MaskInputRejected);
             mtbCode.KeyDown += new KeyEventHandler(mtbCode_KeyDown);
         }
 
+        private void InitServerNrMaskedTextbox()
+        {
+            mtbServerNr.Mask = "000";
+        }
+
         void mtbCode_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
         {
+            if(!mtbCode.Focused)
+            {
+                return;
+            }
+
             if (mtbCode.MaskFull)
             {
             }
@@ -167,16 +179,17 @@ namespace ImpfTerminBot.GUI
             cbCenter.SelectedIndex = 0;
         }
 
-        private void tbCode_TextChanged(object sender, EventArgs e)
+        private void mtbCode_TextChanged(object sender, EventArgs e)
         {
             mtbCode.Text = mtbCode.Text.Trim();
 
-            if (mtbCode.MaskCompleted)
+            if (mtbCode.MaskCompleted && mtbServerNr.MaskCompleted)
             {
                 cbCenter.Enabled = true;
                 cbCountry.Enabled = true;
                 btnStart.Enabled = true;
                 m_Code = mtbCode.Text;
+                m_ServerNr = Convert.ToInt32(mtbServerNr.Text);
             }
             else
             {
@@ -184,6 +197,29 @@ namespace ImpfTerminBot.GUI
                 cbCountry.Enabled = false;
                 btnStart.Enabled = false;
                 m_Code = "";
+                m_ServerNr = 0;
+            }
+        }
+
+        private void mtbServerNr_TextChanged(object sender, EventArgs e)
+        {
+            mtbCode.Text = mtbCode.Text.Trim();
+
+            if (mtbCode.MaskCompleted && mtbServerNr.MaskCompleted)
+            {
+                cbCenter.Enabled = true;
+                cbCountry.Enabled = true;
+                btnStart.Enabled = true;
+                m_Code = mtbCode.Text;
+                m_ServerNr = Convert.ToInt32(mtbServerNr.Text);
+            }
+            else
+            {
+                cbCenter.Enabled = false;
+                cbCountry.Enabled = false;
+                btnStart.Enabled = false;
+                m_Code = "";
+                m_ServerNr = 0;
             }
         }
 
@@ -209,11 +245,10 @@ namespace ImpfTerminBot.GUI
                 else
                 {
                     var browser = GetBrowserType();
-                    var serverNr = (int)nudServerNr.Value;
                     var country = ((KeyValuePair<CountryData, string>)cbCountry.SelectedItem).Key;
                     var center = ((KeyValuePair<CenterData, string>)cbCenter.SelectedItem).Key;
 
-                    m_AppointmentFinder.SearchAsync(browser, serverNr, m_Code, country.Country, center);
+                    m_AppointmentFinder.SearchAsync(browser, m_ServerNr, m_Code, country.Country, center);
                     btnStart.Text = "Suche stoppen";
                     stlStatus.Text = "SUCHE LÄUFT";
                 }
@@ -263,11 +298,11 @@ namespace ImpfTerminBot.GUI
         private void EnableControls(bool b)
         {
             mtbCode.Enabled = b;
+            mtbServerNr.Enabled = b;
             cbCenter.Enabled = b;
             cbCountry.Enabled = b;
             rbChrome.Enabled = b;
             rbFirefox.Enabled = b;
-            nudServerNr.Enabled = b;
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
