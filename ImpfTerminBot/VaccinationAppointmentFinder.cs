@@ -10,7 +10,6 @@ using OpenQA.Selenium.Support.UI;
 
 namespace ImpfTerminBot
 {
-
     public class VaccinationAppointmentFinder
     {
         private string m_Code;
