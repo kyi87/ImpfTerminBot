@@ -64,7 +64,7 @@ Es stehen Chrome und Firefox als Browser zur Wahl. Der jeweilige Browser muss in
 ## Voraussetzungen
 
 - **Betriebssystem:** Nur unter Windows (10) lauffähig
-- **Browser:** Google Chrome oder Mozilla Firefox
+- **Browser:** Chrome oder Firefox
 - **Laufzeitumgebung:** [.NetCore 3.1 Desktop Runtime x64](https://dotnet.microsoft.com/download/dotnet/thank-you/runtime-desktop-3.1.14-windows-x64-installer)
 - **Vermittlungscode:** Es muss ein gültiger Vermittlungscode und die passende Servernummer vorhanden sein
 
