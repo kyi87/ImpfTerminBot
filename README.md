@@ -1,6 +1,6 @@
 # ImpfTerminBot
 
-Der ImpfTerminBot erleichtert die teils langwierige Terminsuche für eine Corona-Schutzimpfung über das Portal [https://www.impfterminservice.de](https://www.impfterminservice.de). Der Bot steuert hierbei den Browser vollautomatisch, so dass der Benutzer nicht am PC warten muss um den nächsten Schritt auf der Seite ausführen zu können. Sobald ein Impftermin gefunden wurde meldet sich der Bot mit einem akustischen Signal. Hier beendet der Bot seine Arbeit und der Benutzer übernimmt die Dateneingabe. 
+Der ImpfTerminBot ist ein Windows 10 Tool, welches die teils langwierige Terminsuche für eine Corona-Schutzimpfung über das Portal [https://www.impfterminservice.de](https://www.impfterminservice.de) erleichtert. Der Bot steuert hierbei den Browser vollautomatisch, so dass der Benutzer nicht am PC warten muss um den nächsten Schritt auf der Seite ausführen zu können. Sobald ein Impftermin gefunden wurde meldet sich der Bot mit einem akustischen Signal. Hier beendet der Bot seine Arbeit und der Benutzer übernimmt die Dateneingabe.
 
 ## Download 
 [ImpfTerminBot.msi](https://github.com/kyi87/ImpfTerminBot/releases/latest/download/ImpfTerminBot.msi)
@@ -64,7 +64,7 @@ Es stehen Chrome und Firefox als Browser zur Wahl. Der jeweilige Browser muss in
 ## Voraussetzungen
 
 - **Betriebssystem:** Nur unter Windows (10) lauffähig
-- **Browser:** Google Chrome oder Mozilla Firefox muss installiert sein
+- **Browser:** Google Chrome oder Mozilla Firefox
 - **Laufzeitumgebung:** [.NetCore 3.1 Desktop Runtime x64](https://dotnet.microsoft.com/download/dotnet/thank-you/runtime-desktop-3.1.14-windows-x64-installer)
 - **Vermittlungscode:** Es muss ein gültiger Vermittlungscode und die passende Servernummer vorhanden sein
 
