@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
 using System.Windows.Forms;
 using System.Media;
 using ImpfTerminBot.Model;
 using ImpfTerminBot.ErrorHandling;
-using System.Linq;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace ImpfTerminBot.GUI
 {
@@ -15,14 +15,10 @@ namespace ImpfTerminBot.GUI
         private List<CountryData> m_LocationData;
         private VaccinationAppointmentFinder m_AppointmentFinder;
         private string m_Code;
-        private Timer m_Timer = new Timer();
         private bool m_ShowAppointmentAvailable;
 
         public View()
         {
-            // Feature ausgeschaltet, da Abfrage der REST API nicht möglich --> Status-Code 429 (Too Many Requests)
-            m_ShowAppointmentAvailable = false;
-
             m_AppointmentFinder = new VaccinationAppointmentFinder();
             m_AppointmentFinder.AppointmentFound += OnSuccess;
             m_AppointmentFinder.SearchCanceled += OnSearchCanceled;
@@ -189,52 +185,6 @@ namespace ImpfTerminBot.GUI
             cbCenter.SelectedIndex = 0;
         }
 
-        private async void cbCenter_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (m_ShowAppointmentAvailable)
-            {
-                var center = ((KeyValuePair<CenterData, string>)cbCenter.SelectedItem).Key;
-                var result = await m_AppointmentFinder.IsAppointmentAvailable(center);
-                OnAppointmentAvailable(result);
-
-                if (m_Timer.Enabled)
-                {
-                    m_Timer.Stop();
-                    m_Timer.Tick -= new EventHandler(Tick);
-                }
-
-                var minutes = 5;
-                m_Timer.Interval = 1000 * 60 * minutes;
-                m_Timer.Tick += new EventHandler(Tick);
-                m_Timer.Start(); 
-            }
-        }
-
-        private async void Tick(object sender, EventArgs e)
-        {
-            var center = ((KeyValuePair<CenterData, string>)cbCenter.SelectedItem).Key;
-
-            m_Timer.Stop();
-            var result = await m_AppointmentFinder.IsAppointmentAvailable(center);
-            OnAppointmentAvailable(result);
-            m_Timer.Start();
-        }
-
-        private void OnAppointmentAvailable(VaccinationAppointmentResult result)
-        {
-            if (InvokeRequired)
-            {
-                Invoke(new MethodInvoker((() => OnAppointmentAvailable(result))));
-            }
-            else
-            {
-                if (result != null)
-                {
-                    MessageBox.Show("Termine vorhanden.");
-                }
-            }
-        }
-
         private void mtbCode_TextChanged(object sender, EventArgs e)
         {
             if (mtbCode.MaskCompleted)
@@ -313,7 +263,7 @@ namespace ImpfTerminBot.GUI
             m_AppointmentFinder.CancelSearch();
         }
 
-        private static void PlaySound()
+        private void PlaySound()
         {
             var soundFile = @"C:\Windows\Media\Alarm01.wav";
             if (File.Exists(soundFile))
@@ -334,6 +284,7 @@ namespace ImpfTerminBot.GUI
             cbCountry.Enabled = b;
             rbChrome.Enabled = b;
             rbFirefox.Enabled = b;
+            btnSoundTest.Enabled = b;
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -350,6 +301,14 @@ namespace ImpfTerminBot.GUI
                     e.Cancel = true;
                 }
             }
+        }
+
+        private async void btnSoundTest_Click(object sender, EventArgs e)
+        {
+            await Task.Run(() =>
+            {
+                PlaySound();
+            });
         }
     }
 }
