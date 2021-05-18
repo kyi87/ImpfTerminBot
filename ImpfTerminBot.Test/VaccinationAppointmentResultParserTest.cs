@@ -1,4 +1,4 @@
-using ImpfTerminBot.GUI.Model;
+using ImpfTerminBot.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 

@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using ImpfTerminBot.ErrorHandling;
-using ImpfTerminBot.GUI.Model;
 using ImpfTerminBot.Model;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -55,18 +54,18 @@ namespace ImpfTerminBot
             SearchFailed?.Invoke(this, e);
         }
 
-        public void SearchAsync(eBrowserType browserType, int server, string code, string country, CenterData centerData)
+        public void SearchAsync(eBrowserType browserType, string code,CenterData centerData)
         {
             try
             {
                 m_Driver = CreateBrowserDriver(browserType);
 
-                m_Country = country;
+                m_Country = centerData.Country;
                 m_Code = code;
                 m_CenterData = centerData;
 
                 var postcode = m_CenterData.Postcode;
-                m_StartUrl = $"https://{server:000}-iz.impfterminservice.de/impftermine/suche/{code}/{postcode}";
+                m_StartUrl = $"{centerData.Url}/impftermine/suche/{code}/{postcode}";
                 m_Driver.Navigate().GoToUrl(m_StartUrl);
 
                 m_IsSearching = true;

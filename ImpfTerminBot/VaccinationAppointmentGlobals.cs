@@ -1,4 +1,4 @@
-﻿using ImpfTerminBot.GUI.Model;
+﻿using ImpfTerminBot.Model;
 using System.Collections.Generic;
 
 namespace ImpfTerminBot

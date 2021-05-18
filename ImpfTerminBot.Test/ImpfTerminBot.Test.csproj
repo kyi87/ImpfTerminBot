@@ -17,4 +17,10 @@
     <ProjectReference Include="..\ImpfTerminBot\ImpfTerminBot.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="TestData\data.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

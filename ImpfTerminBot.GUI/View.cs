@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Media;
 using ImpfTerminBot.Model;
 using ImpfTerminBot.ErrorHandling;
+using System.Linq;
 
 namespace ImpfTerminBot.GUI
 {
@@ -14,7 +15,6 @@ namespace ImpfTerminBot.GUI
         private List<CountryData> m_LocationData;
         private VaccinationAppointmentFinder m_AppointmentFinder;
         private string m_Code;
-        private int m_ServerNr;
         private Timer m_Timer = new Timer();
         private bool m_ShowAppointmentAvailable;
 
@@ -31,7 +31,6 @@ namespace ImpfTerminBot.GUI
             InitializeComponent();
             ReadJsonData();
             InitCodeMaskedTextbox();
-            InitServerNrMaskedTextbox();
             InitDictionary();
 
             btnStart.Enabled = false;
@@ -106,6 +105,35 @@ namespace ImpfTerminBot.GUI
             }
         }
 
+        private void ReadJsonData()
+        {
+            try
+            {
+                var reader = new CountryDataReader();
+                try
+                {
+                    m_LocationData = reader.ReadFromUrl();
+                }
+                catch (Exception e)
+                {
+                    var fileName = "data.json";
+                    m_LocationData = reader.ReadFromFile(fileName);
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Es ist ein Fehler aufgetreten: {e.Message}", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+            }
+        }
+
+        private void InitCodeMaskedTextbox()
+        {
+            mtbCode.Mask = ">AAAA-AAAA-AAAA";
+            mtbCode.MaskInputRejected += new MaskInputRejectedEventHandler(mtbCode_MaskInputRejected);
+            mtbCode.KeyDown += new KeyEventHandler(mtbCode_KeyDown);
+        }
+
         private void InitDictionary()
         {
             var dict = new Dictionary<CountryData, string>();
@@ -117,30 +145,6 @@ namespace ImpfTerminBot.GUI
             cbCountry.DisplayMember = "Value";
             cbCountry.ValueMember = "Key";
             cbCountry.SelectedIndex = 0;
-        }
-
-        private void ReadJsonData()
-        {
-            var filename = "data.json";
-            if (!File.Exists(filename))
-            {
-                MessageBox.Show($"Die Datei {filename} konnte nicht gefunden werden.", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Application.Exit();
-            }
-            var jsonString = File.ReadAllText(filename);
-            m_LocationData = JsonSerializer.Deserialize<List<CountryData>>(jsonString);
-        }
-
-        private void InitCodeMaskedTextbox()
-        {
-            mtbCode.Mask = ">AAAA-AAAA-AAAA";
-            mtbCode.MaskInputRejected += new MaskInputRejectedEventHandler(mtbCode_MaskInputRejected);
-            mtbCode.KeyDown += new KeyEventHandler(mtbCode_KeyDown);
-        }
-
-        private void InitServerNrMaskedTextbox()
-        {
-            mtbServerNr.Mask = "000-iz\\.impfterminservice\\.de";
         }
 
         void mtbCode_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
@@ -175,7 +179,8 @@ namespace ImpfTerminBot.GUI
             var dict = new Dictionary<CenterData, string>();
             foreach (var center in country.Centers)
             {
-                dict.Add(center, center.CenterName);
+                var displayName = $"{center.Postcode} {center.City}, {center.CenterName}";
+                dict.Add(center, displayName);
             }
 
             cbCenter.DataSource = new BindingSource(dict, null);
@@ -232,26 +237,14 @@ namespace ImpfTerminBot.GUI
 
         private void mtbCode_TextChanged(object sender, EventArgs e)
         {
-            HandleMtbTextChanged();
-        }
-
-        private void mtbServerNr_TextChanged(object sender, EventArgs e)
-        {
-            HandleMtbTextChanged();
-        }
-
-        private void HandleMtbTextChanged()
-        {
-            if (mtbCode.MaskCompleted && mtbServerNr.MaskCompleted)
+            if (mtbCode.MaskCompleted)
             {
                 mtbCode.Text = mtbCode.Text.Trim();
-                var serverNr = mtbServerNr.Text.Substring(0, 3);
 
                 cbCenter.Enabled = true;
                 cbCountry.Enabled = true;
                 btnStart.Enabled = true;
                 m_Code = mtbCode.Text;
-                m_ServerNr = Convert.ToInt32(serverNr);
             }
             else
             {
@@ -259,7 +252,6 @@ namespace ImpfTerminBot.GUI
                 cbCountry.Enabled = false;
                 btnStart.Enabled = false;
                 m_Code = "";
-                m_ServerNr = 0;
             }
         }
 
@@ -288,7 +280,7 @@ namespace ImpfTerminBot.GUI
                     var country = ((KeyValuePair<CountryData, string>)cbCountry.SelectedItem).Key;
                     var center = ((KeyValuePair<CenterData, string>)cbCenter.SelectedItem).Key;
 
-                    m_AppointmentFinder.SearchAsync(browser, m_ServerNr, m_Code, country.Country, center);
+                    m_AppointmentFinder.SearchAsync(browser, m_Code, center);
                     btnStart.Text = "Suche stoppen";
                     stlStatus.Text = "SUCHE LÄUFT";
                 }
@@ -338,7 +330,6 @@ namespace ImpfTerminBot.GUI
         private void EnableControls(bool b)
         {
             mtbCode.Enabled = b;
-            mtbServerNr.Enabled = b;
             cbCenter.Enabled = b;
             cbCountry.Enabled = b;
             rbChrome.Enabled = b;

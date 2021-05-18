@@ -1,4 +1,4 @@
-﻿namespace ImpfTerminBot.GUI.Model
+﻿namespace ImpfTerminBot.Model
 {
     public enum eVaccines
     {

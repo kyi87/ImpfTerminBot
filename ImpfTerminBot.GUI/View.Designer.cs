@@ -39,9 +39,7 @@ namespace ImpfTerminBot.GUI
             this.label2 = new System.Windows.Forms.Label();
             this.cbCountry = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
-            this.mtbServerNr = new System.Windows.Forms.MaskedTextBox();
             this.mtbCode = new System.Windows.Forms.MaskedTextBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.btnStart = new System.Windows.Forms.Button();
@@ -153,13 +151,10 @@ namespace ImpfTerminBot.GUI
             // 
             // tableLayoutPanel6
             // 
-            this.tableLayoutPanel6.ColumnCount = 3;
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.73913F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45.08009F));
-            this.tableLayoutPanel6.Controls.Add(this.mtbServerNr, 2, 0);
+            this.tableLayoutPanel6.ColumnCount = 2;
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.42792F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.57208F));
             this.tableLayoutPanel6.Controls.Add(this.mtbCode, 0, 0);
-            this.tableLayoutPanel6.Controls.Add(this.label6, 1, 0);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(136, 3);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
@@ -168,33 +163,14 @@ namespace ImpfTerminBot.GUI
             this.tableLayoutPanel6.Size = new System.Drawing.Size(437, 36);
             this.tableLayoutPanel6.TabIndex = 13;
             // 
-            // mtbServerNr
-            // 
-            this.mtbServerNr.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.mtbServerNr.Location = new System.Drawing.Point(242, 6);
-            this.mtbServerNr.Name = "mtbServerNr";
-            this.mtbServerNr.Size = new System.Drawing.Size(192, 23);
-            this.mtbServerNr.TabIndex = 16;
-            this.mtbServerNr.TextChanged += new System.EventHandler(this.mtbServerNr_TextChanged);
-            // 
             // mtbCode
             // 
             this.mtbCode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.mtbCode.Location = new System.Drawing.Point(3, 6);
             this.mtbCode.Name = "mtbCode";
-            this.mtbCode.Size = new System.Drawing.Size(139, 23);
-            this.mtbCode.TabIndex = 14;
+            this.mtbCode.Size = new System.Drawing.Size(210, 23);
+            this.mtbCode.TabIndex = 15;
             this.mtbCode.TextChanged += new System.EventHandler(this.mtbCode_TextChanged);
-            // 
-            // label6
-            // 
-            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(148, 3);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(88, 30);
-            this.label6.TabIndex = 15;
-            this.label6.Text = "Servernummer aus E-Mail:";
             // 
             // tableLayoutPanel1
             // 
@@ -292,7 +268,7 @@ namespace ImpfTerminBot.GUI
             this.tableLayoutPanel5.ColumnCount = 3;
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 46.90266F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 53.09734F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 190F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 192F));
             this.tableLayoutPanel5.Controls.Add(this.rbChrome, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.rbFirefox, 1, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -310,7 +286,7 @@ namespace ImpfTerminBot.GUI
             this.rbChrome.Checked = true;
             this.rbChrome.Location = new System.Drawing.Point(3, 3);
             this.rbChrome.Name = "rbChrome";
-            this.rbChrome.Size = new System.Drawing.Size(109, 19);
+            this.rbChrome.Size = new System.Drawing.Size(108, 19);
             this.rbChrome.TabIndex = 5;
             this.rbChrome.TabStop = true;
             this.rbChrome.Text = "Chrome";
@@ -320,9 +296,9 @@ namespace ImpfTerminBot.GUI
             // 
             this.rbFirefox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.rbFirefox.AutoSize = true;
-            this.rbFirefox.Location = new System.Drawing.Point(118, 3);
+            this.rbFirefox.Location = new System.Drawing.Point(117, 3);
             this.rbFirefox.Name = "rbFirefox";
-            this.rbFirefox.Size = new System.Drawing.Size(124, 19);
+            this.rbFirefox.Size = new System.Drawing.Size(123, 19);
             this.rbFirefox.TabIndex = 10;
             this.rbFirefox.Text = "Firefox";
             this.rbFirefox.UseVisualStyleBackColor = true;
@@ -395,10 +371,8 @@ namespace ImpfTerminBot.GUI
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel stlStatus;
         private System.Windows.Forms.StatusStrip sStrip;
-        private System.Windows.Forms.MaskedTextBox mtbCode;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
-        private System.Windows.Forms.MaskedTextBox mtbServerNr;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.MaskedTextBox mtbCode;
     }
 }
 
