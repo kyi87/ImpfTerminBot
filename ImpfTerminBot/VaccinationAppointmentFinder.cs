@@ -86,13 +86,16 @@ namespace ImpfTerminBot
             {
                 case eBrowserType.Chrome:
                     {
-                        driver = new ChromeDriver();
+                        var chromeDriverService = ChromeDriverService.CreateDefaultService();
+                        chromeDriverService.HideCommandPromptWindow = true;
+                        driver = new ChromeDriver(chromeDriverService);
                         break;
                     }
                 case eBrowserType.Firefox:
                     {
-                        FirefoxDriverService geckoService = FirefoxDriverService.CreateDefaultService();
+                        var geckoService = FirefoxDriverService.CreateDefaultService();
                         geckoService.Host = "::1";
+                        geckoService.HideCommandPromptWindow = true;
                         var firefoxOptions = new FirefoxOptions();
                         firefoxOptions.AcceptInsecureCertificates = true;
                         driver = new FirefoxDriver(geckoService, firefoxOptions);
@@ -202,6 +205,7 @@ namespace ImpfTerminBot
                             {
                                 m_IsSearching = false;
                                 OnFail(new FailEventArgs() { ErrorText = e.Message });
+                                
                                 break;
                             }
                         }
