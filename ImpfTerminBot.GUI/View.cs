@@ -28,6 +28,7 @@ namespace ImpfTerminBot.GUI
             ReadJsonData();
             InitCodeMaskedTextbox();
             InitDictionary();
+            EnablePersonalData(false);
 
             btnStart.Enabled = false;
             btnCancel.Enabled = false;
@@ -285,6 +286,15 @@ namespace ImpfTerminBot.GUI
             rbChrome.Enabled = b;
             rbFirefox.Enabled = b;
             btnSoundTest.Enabled = b;
+            cbAutoBook.Enabled = b;
+            if(cbAutoBook.Checked)
+            {
+                EnablePersonalData(b);
+            }
+            else
+            {
+                EnablePersonalData(false);
+            }
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -309,6 +319,24 @@ namespace ImpfTerminBot.GUI
             {
                 PlaySound();
             });
+        }
+
+        private void cbAutoBook_CheckedChanged(object sender, EventArgs e)
+        {
+            var isAutoBook = cbAutoBook.Checked;
+            EnablePersonalData(isAutoBook);
+        }
+
+        private void EnablePersonalData(bool b)
+        {
+            tbName.Enabled = b;
+            tbFirstname.Enabled = b;
+            tbPostcode.Enabled = b;
+            tbCity.Enabled = b;
+            tbStreet.Enabled = b;
+            tbHouseNumber.Enabled = b;
+            tbPhone.Enabled = b;
+            tbEmail.Enabled = b;
         }
     }
 }
