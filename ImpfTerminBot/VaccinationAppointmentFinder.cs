@@ -24,6 +24,8 @@ namespace ImpfTerminBot
         private bool m_IsStop;
         private int m_SuccessWaitTime_ms;
 
+        public PersonalData PersonalData { get; set; }
+
         public event EventHandler AppointmentFound;
         public event EventHandler SearchCanceled;
         public event EventHandler<FailEventArgs> SearchFailed;
@@ -264,10 +266,10 @@ namespace ImpfTerminBot
             Thread.Sleep(500);
 
             var btnSelector = By.CssSelector("button[class='btn kv-btn btn-magenta text-uppercase d-inline-block']");
-            ClickButton(btnSelector);
+            Click(btnSelector);
         }
 
-        private void ClickButton(By btnSelector)
+        private void Click(By btnSelector)
         {
             var wait = new WebDriverWait(m_Driver, TimeSpan.FromSeconds(15));
             wait.Until(ExpectedConditions.ElementExists(btnSelector));
@@ -282,11 +284,89 @@ namespace ImpfTerminBot
             try
             {
                 var btnSelector = By.CssSelector("button[class='btn btn-magenta kv-btn kv-btn-round search-filter-button']");
-                ClickButton(btnSelector);
+                Click(btnSelector);
 
                 Thread.Sleep(m_SuccessWaitTime_ms);
                 var isSuccess = Exists(By.XPath("//*[contains(., '1. Impftermin')]")) &&
                                 !Exists(By.XPath("//*[contains(., 'Derzeit stehen leider keine Termine zur Verfügung.')]"));
+
+                if(isSuccess && PersonalData != null)
+                {
+                    // Click 1. termin
+                    var inputFirstAppointment = By.XPath("(//*[@formcontrolname='slotPair'])[1]");
+                    Click(inputFirstAppointment);
+                    Thread.Sleep(m_SuccessWaitTime_ms);
+
+                    // Click Auswählen
+                    var buttonChoose = By.XPath("//button[contains(.,'AUSWÄHLEN')]");
+                    Click(buttonChoose);
+                    Thread.Sleep(m_SuccessWaitTime_ms);
+
+                    By inputSalutation = null;
+                    switch (PersonalData.Salutation)
+                    {
+                        case eSalutation.Sir:
+                        {
+                            inputSalutation = By.XPath("(//input[@value='Herr'])[1]");
+                            break;
+                        }
+                        case eSalutation.Lady:
+                        {
+                            inputSalutation = By.XPath("(//input[@value='Frau'])[1]");
+                            break;
+                        }
+                        case eSalutation.Divers:
+                        {
+                            inputSalutation = By.XPath("(//input[@value='Divers'])[1]");
+                            break;
+                        }
+                    }
+                    Click(inputSalutation);
+                    Thread.Sleep(m_SuccessWaitTime_ms);
+
+                    var firstName = m_Driver.FindElement(By.CssSelector("input[formcontrolname='firstname']"));
+                    firstName.SendKeys(PersonalData.FirstName);
+                    Thread.Sleep(1000);
+
+                    var name = m_Driver.FindElement(By.CssSelector("input[formcontrolname='lastname']"));
+                    name.SendKeys(PersonalData.Name);
+                    Thread.Sleep(1000);
+
+                    var postCode = m_Driver.FindElement(By.CssSelector("input[formcontrolname='zip']"));
+                    postCode.SendKeys(PersonalData.Postcode);
+                    Thread.Sleep(1000);
+
+                    var city = m_Driver.FindElement(By.CssSelector("input[formcontrolname='city']"));
+                    city.SendKeys(PersonalData.City);
+                    Thread.Sleep(1000);
+
+                    var street = m_Driver.FindElement(By.CssSelector("input[formcontrolname='street']"));
+                    street.SendKeys(PersonalData.Street);
+                    Thread.Sleep(1000);
+
+                    var housenumber = m_Driver.FindElement(By.CssSelector("input[formcontrolname='housenumber']"));
+                    housenumber.SendKeys(PersonalData.HouseNumber);
+                    Thread.Sleep(1000);
+
+                    var phone = m_Driver.FindElement(By.CssSelector("formcontrolname[formcontrolname='phone']"));
+                    phone.SendKeys(PersonalData.Phone);
+                    Thread.Sleep(1000);
+
+                    var email = m_Driver.FindElement(By.CssSelector("formcontrolname[formcontrolname='notificationReceiver']"));
+                    email.SendKeys(PersonalData.Email);
+                    Thread.Sleep(1000);
+
+                    // Click Auswählen
+                    var buttonOk = By.XPath("//button[contains(.,'Übernehmen')]");
+                    Click(buttonOk);
+                    Thread.Sleep(1000);
+
+                    // Click Buchen
+                    var buttonBook = By.XPath("//button[contains(.,'VERBINDLICH BUCHEN')]");
+                    Click(buttonOk);
+                    Thread.Sleep(1000);
+                }
+
                 return isSuccess;
             }
             catch (Exception e)
@@ -307,7 +387,7 @@ namespace ImpfTerminBot
             Thread.Sleep(500);
 
             var btnSelector = By.CssSelector("button[class='btn kv-btn btn-magenta text-uppercase d-inline-block']");
-            ClickButton(btnSelector);
+            Click(btnSelector);
 
             Thread.Sleep(500);
             if (Exists(By.XPath("//*[contains(., 'Es ist ein unerwarteter Fehler aufgetreten')]")))

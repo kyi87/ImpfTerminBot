@@ -194,7 +194,6 @@ namespace ImpfTerminBot.GUI
 
                 cbCenter.Enabled = true;
                 cbCountry.Enabled = true;
-                btnStart.Enabled = true;
                 m_Code = mtbCode.Text;
             }
             else
@@ -204,6 +203,7 @@ namespace ImpfTerminBot.GUI
                 btnStart.Enabled = false;
                 m_Code = "";
             }
+            EnableStartButton();
         }
 
         private void btnStart_Click(object sender, EventArgs e)
@@ -230,6 +230,13 @@ namespace ImpfTerminBot.GUI
                     var browser = GetBrowserType();
                     var country = ((KeyValuePair<CountryData, string>)cbCountry.SelectedItem).Key;
                     var center = ((KeyValuePair<CenterData, string>)cbCenter.SelectedItem).Key;
+
+                    m_AppointmentFinder.PersonalData = null;
+                    if (cbAutoBook.Checked)
+                    {
+                        var personalData = GetPersonalData();
+                        m_AppointmentFinder.PersonalData = personalData;
+                    }
 
                     m_AppointmentFinder.SearchAsync(browser, m_Code, center);
                     btnStart.Text = "Suche stoppen";
@@ -325,6 +332,35 @@ namespace ImpfTerminBot.GUI
         {
             var isAutoBook = cbAutoBook.Checked;
             EnablePersonalData(isAutoBook);
+            EnableStartButton();
+        }
+
+        private void EnableStartButton()
+        {
+            if (cbAutoBook.Checked && mtbCode.MaskCompleted)
+            {
+                var personalData = GetPersonalData();
+                btnStart.Enabled = personalData.IsComplete();
+            }
+            else
+            {
+                btnStart.Enabled = mtbCode.MaskCompleted;
+            }
+        }
+
+        private PersonalData GetPersonalData()
+        {
+            return new PersonalData()
+            {
+                City = tbCity.Text,
+                FirstName = tbFirstname.Text,
+                Name = tbName.Text,
+                Email = tbEmail.Text,
+                HouseNumber = tbHouseNumber.Text,
+                Phone = tbPhone.Text,
+                Postcode = tbPostcode.Text,
+                Street = tbStreet.Text
+            };
         }
 
         private void EnablePersonalData(bool b)
@@ -337,6 +373,11 @@ namespace ImpfTerminBot.GUI
             tbHouseNumber.Enabled = b;
             tbPhone.Enabled = b;
             tbEmail.Enabled = b;
+        }
+
+        private void tbPersonalData_TextChanged(object sender, EventArgs e)
+        {
+            EnableStartButton();
         }
     }
 }

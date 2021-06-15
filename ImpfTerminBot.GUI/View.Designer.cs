@@ -142,7 +142,7 @@ namespace ImpfTerminBot.GUI
             this.cbCenter.Location = new System.Drawing.Point(113, 87);
             this.cbCenter.Name = "cbCenter";
             this.cbCenter.Size = new System.Drawing.Size(542, 23);
-            this.cbCenter.TabIndex = 12;
+            this.cbCenter.TabIndex = 3;
             // 
             // label3
             // 
@@ -172,7 +172,7 @@ namespace ImpfTerminBot.GUI
             this.cbCountry.Location = new System.Drawing.Point(113, 47);
             this.cbCountry.Name = "cbCountry";
             this.cbCountry.Size = new System.Drawing.Size(542, 23);
-            this.cbCountry.TabIndex = 7;
+            this.cbCountry.TabIndex = 2;
             this.cbCountry.SelectedIndexChanged += new System.EventHandler(this.cbCountry_SelectionChanged);
             // 
             // tableLayoutPanel6
@@ -195,7 +195,7 @@ namespace ImpfTerminBot.GUI
             this.mtbCode.Location = new System.Drawing.Point(3, 5);
             this.mtbCode.Name = "mtbCode";
             this.mtbCode.Size = new System.Drawing.Size(261, 23);
-            this.mtbCode.TabIndex = 15;
+            this.mtbCode.TabIndex = 1;
             this.mtbCode.TextChanged += new System.EventHandler(this.mtbCode_TextChanged);
             // 
             // tableLayoutPanel1
@@ -239,7 +239,7 @@ namespace ImpfTerminBot.GUI
             this.btnStart.Location = new System.Drawing.Point(224, 3);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(215, 46);
-            this.btnStart.TabIndex = 1;
+            this.btnStart.TabIndex = 16;
             this.btnStart.Text = "Termin suchen";
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
@@ -250,7 +250,7 @@ namespace ImpfTerminBot.GUI
             this.btnCancel.Location = new System.Drawing.Point(445, 3);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(216, 46);
-            this.btnCancel.TabIndex = 2;
+            this.btnCancel.TabIndex = 17;
             this.btnCancel.Text = "Abbrechen";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnStop_Click);
@@ -306,7 +306,7 @@ namespace ImpfTerminBot.GUI
             this.btnSoundTest.Location = new System.Drawing.Point(3, 3);
             this.btnSoundTest.Name = "btnSoundTest";
             this.btnSoundTest.Size = new System.Drawing.Size(64, 28);
-            this.btnSoundTest.TabIndex = 0;
+            this.btnSoundTest.TabIndex = 15;
             this.btnSoundTest.UseVisualStyleBackColor = true;
             this.btnSoundTest.Click += new System.EventHandler(this.btnSoundTest_Click);
             // 
@@ -335,7 +335,7 @@ namespace ImpfTerminBot.GUI
             this.tableLayoutPanel5.ColumnCount = 3;
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 46.90266F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 53.09734F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 202F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 206F));
             this.tableLayoutPanel5.Controls.Add(this.rbChrome, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.rbFirefox, 1, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -353,8 +353,8 @@ namespace ImpfTerminBot.GUI
             this.rbChrome.Checked = true;
             this.rbChrome.Location = new System.Drawing.Point(3, 7);
             this.rbChrome.Name = "rbChrome";
-            this.rbChrome.Size = new System.Drawing.Size(153, 19);
-            this.rbChrome.TabIndex = 5;
+            this.rbChrome.Size = new System.Drawing.Size(152, 19);
+            this.rbChrome.TabIndex = 13;
             this.rbChrome.TabStop = true;
             this.rbChrome.Text = "Chrome";
             this.rbChrome.UseVisualStyleBackColor = true;
@@ -363,10 +363,11 @@ namespace ImpfTerminBot.GUI
             // 
             this.rbFirefox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.rbFirefox.AutoSize = true;
-            this.rbFirefox.Location = new System.Drawing.Point(162, 7);
+            this.rbFirefox.Location = new System.Drawing.Point(161, 7);
             this.rbFirefox.Name = "rbFirefox";
-            this.rbFirefox.Size = new System.Drawing.Size(175, 19);
-            this.rbFirefox.TabIndex = 10;
+            this.rbFirefox.Size = new System.Drawing.Size(172, 19);
+            this.rbFirefox.TabIndex = 14;
+            this.rbFirefox.TabStop = true;
             this.rbFirefox.Text = "Firefox";
             this.rbFirefox.UseVisualStyleBackColor = true;
             // 
@@ -516,7 +517,8 @@ namespace ImpfTerminBot.GUI
             this.tbName.Location = new System.Drawing.Point(107, 9);
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(215, 23);
-            this.tbName.TabIndex = 24;
+            this.tbName.TabIndex = 5;
+            this.tbName.TextChanged += new System.EventHandler(this.tbPersonalData_TextChanged);
             // 
             // tbPostcode
             // 
@@ -524,7 +526,8 @@ namespace ImpfTerminBot.GUI
             this.tbPostcode.Location = new System.Drawing.Point(107, 50);
             this.tbPostcode.Name = "tbPostcode";
             this.tbPostcode.Size = new System.Drawing.Size(215, 23);
-            this.tbPostcode.TabIndex = 25;
+            this.tbPostcode.TabIndex = 7;
+            this.tbPostcode.TextChanged += new System.EventHandler(this.tbPersonalData_TextChanged);
             // 
             // tbStreet
             // 
@@ -532,7 +535,8 @@ namespace ImpfTerminBot.GUI
             this.tbStreet.Location = new System.Drawing.Point(107, 91);
             this.tbStreet.Name = "tbStreet";
             this.tbStreet.Size = new System.Drawing.Size(215, 23);
-            this.tbStreet.TabIndex = 26;
+            this.tbStreet.TabIndex = 9;
+            this.tbStreet.TextChanged += new System.EventHandler(this.tbPersonalData_TextChanged);
             // 
             // tbPhone
             // 
@@ -540,7 +544,8 @@ namespace ImpfTerminBot.GUI
             this.tbPhone.Location = new System.Drawing.Point(107, 133);
             this.tbPhone.Name = "tbPhone";
             this.tbPhone.Size = new System.Drawing.Size(215, 23);
-            this.tbPhone.TabIndex = 27;
+            this.tbPhone.TabIndex = 11;
+            this.tbPhone.TextChanged += new System.EventHandler(this.tbPersonalData_TextChanged);
             // 
             // tbFirstname
             // 
@@ -548,7 +553,8 @@ namespace ImpfTerminBot.GUI
             this.tbFirstname.Location = new System.Drawing.Point(432, 9);
             this.tbFirstname.Name = "tbFirstname";
             this.tbFirstname.Size = new System.Drawing.Size(217, 23);
-            this.tbFirstname.TabIndex = 28;
+            this.tbFirstname.TabIndex = 6;
+            this.tbFirstname.TextChanged += new System.EventHandler(this.tbPersonalData_TextChanged);
             // 
             // tbCity
             // 
@@ -556,7 +562,8 @@ namespace ImpfTerminBot.GUI
             this.tbCity.Location = new System.Drawing.Point(432, 50);
             this.tbCity.Name = "tbCity";
             this.tbCity.Size = new System.Drawing.Size(217, 23);
-            this.tbCity.TabIndex = 29;
+            this.tbCity.TabIndex = 8;
+            this.tbCity.TextChanged += new System.EventHandler(this.tbPersonalData_TextChanged);
             // 
             // tbHouseNumber
             // 
@@ -564,7 +571,8 @@ namespace ImpfTerminBot.GUI
             this.tbHouseNumber.Location = new System.Drawing.Point(432, 91);
             this.tbHouseNumber.Name = "tbHouseNumber";
             this.tbHouseNumber.Size = new System.Drawing.Size(217, 23);
-            this.tbHouseNumber.TabIndex = 30;
+            this.tbHouseNumber.TabIndex = 10;
+            this.tbHouseNumber.TextChanged += new System.EventHandler(this.tbPersonalData_TextChanged);
             // 
             // tbEmail
             // 
@@ -572,7 +580,8 @@ namespace ImpfTerminBot.GUI
             this.tbEmail.Location = new System.Drawing.Point(432, 133);
             this.tbEmail.Name = "tbEmail";
             this.tbEmail.Size = new System.Drawing.Size(217, 23);
-            this.tbEmail.TabIndex = 31;
+            this.tbEmail.TabIndex = 12;
+            this.tbEmail.TextChanged += new System.EventHandler(this.tbPersonalData_TextChanged);
             // 
             // cbAutoBook
             // 
@@ -581,7 +590,7 @@ namespace ImpfTerminBot.GUI
             this.cbAutoBook.Location = new System.Drawing.Point(3, 3);
             this.cbAutoBook.Name = "cbAutoBook";
             this.cbAutoBook.Size = new System.Drawing.Size(174, 17);
-            this.cbAutoBook.TabIndex = 1;
+            this.cbAutoBook.TabIndex = 4;
             this.cbAutoBook.Text = "Termin automatisch buchen";
             this.cbAutoBook.UseVisualStyleBackColor = true;
             this.cbAutoBook.CheckedChanged += new System.EventHandler(this.cbAutoBook_CheckedChanged);
