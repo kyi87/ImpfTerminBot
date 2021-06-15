@@ -1,5 +1,8 @@
-﻿namespace ImpfTerminBot.Model
+﻿using System;
+
+namespace ImpfTerminBot.Model
 {
+    [Serializable]
     public class PersonalData
     {
         public eSalutation Salutation {get; set;}
@@ -24,5 +27,32 @@
                 !string.IsNullOrEmpty(Phone) &&
                 !string.IsNullOrEmpty(HouseNumber) ;
         }
+
+        public override bool Equals(Object obj)
+        {
+            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }
+            else
+            {
+                PersonalData p = (PersonalData)obj;
+                return (Salutation == p.Salutation)
+                    && (Name == p.Name)
+                    && (FirstName == p.FirstName)
+                    && (Postcode == p.Postcode)
+                    && (City == p.City)
+                    && (Street == p.Street)
+                    && (HouseNumber == p.HouseNumber)
+                    && (Phone == p.Phone)
+                    && (Email == p.Email);
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
     }
 }
