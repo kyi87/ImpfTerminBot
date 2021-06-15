@@ -348,11 +348,11 @@ namespace ImpfTerminBot
                     housenumber.SendKeys(PersonalData.HouseNumber);
                     Thread.Sleep(1000);
 
-                    var phone = m_Driver.FindElement(By.CssSelector("formcontrolname[formcontrolname='phone']"));
+                    var phone = m_Driver.FindElement(By.CssSelector("input[formcontrolname='phone']"));
                     phone.SendKeys(PersonalData.Phone);
                     Thread.Sleep(1000);
 
-                    var email = m_Driver.FindElement(By.CssSelector("formcontrolname[formcontrolname='notificationReceiver']"));
+                    var email = m_Driver.FindElement(By.CssSelector("input[formcontrolname='notificationReceiver']"));
                     email.SendKeys(PersonalData.Email);
                     Thread.Sleep(1000);
 
