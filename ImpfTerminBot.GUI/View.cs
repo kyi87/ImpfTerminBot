@@ -29,6 +29,7 @@ namespace ImpfTerminBot.GUI
             InitCodeMaskedTextbox();
             InitDictionary();
             EnablePersonalData(false);
+            InitSalutationComboBox();
 
             btnStart.Enabled = false;
             btnCancel.Enabled = false;
@@ -142,6 +143,20 @@ namespace ImpfTerminBot.GUI
             cbCountry.DisplayMember = "Value";
             cbCountry.ValueMember = "Key";
             cbCountry.SelectedIndex = 0;
+        }
+
+        private void InitSalutationComboBox()
+        {
+            var dict = new Dictionary<eSalutation, string>()
+            {
+                {eSalutation.Sir, "Herr" },
+                {eSalutation.Lady, "Frau" },
+                {eSalutation.Divers, "Divers" },
+            };
+            cbSalutation.DataSource = new BindingSource(dict, null);
+            cbSalutation.DisplayMember = "Value";
+            cbSalutation.ValueMember = "Key";
+            cbSalutation.SelectedIndex = 0;
         }
 
         void mtbCode_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
@@ -350,8 +365,10 @@ namespace ImpfTerminBot.GUI
 
         private PersonalData GetPersonalData()
         {
+            eSalutation salutation = ((KeyValuePair<eSalutation, string>)cbSalutation.SelectedItem).Key;
             return new PersonalData()
             {
+                Salutation = salutation,
                 City = tbCity.Text,
                 FirstName = tbFirstname.Text,
                 Name = tbName.Text,
@@ -365,6 +382,7 @@ namespace ImpfTerminBot.GUI
 
         private void EnablePersonalData(bool b)
         {
+            cbSalutation.Enabled = b;
             tbName.Enabled = b;
             tbFirstname.Enabled = b;
             tbPostcode.Enabled = b;
