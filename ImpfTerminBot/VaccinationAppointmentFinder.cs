@@ -8,6 +8,7 @@ using ImpfTerminBot.Model;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 
 namespace ImpfTerminBot
@@ -16,25 +17,31 @@ namespace ImpfTerminBot
     public class VaccinationAppointmentFinder
     {
         private string m_Code;
+        private eBrowserType m_BrowserType;
         private string m_Country;
         private string m_StartUrl;
         private CenterData m_CenterData;
         private IWebDriver m_Driver;
         private bool m_IsSearching;
         private bool m_IsStop;
-        private int m_SuccessWaitTime_ms;
 
         public PersonalData PersonalData { get; set; }
+        public int LoopWaitTime_ms { get; set; } = 1000;
+        public int FindElementTimeout_ms { get; set; } = 15000;
+        public int StopWaitTime_ms { get; set; } = 10;
+        public int NavigateToStartWaitTime_ms { get; set; } = 2000;
+        public int AfterClickWaitTime_ms { get; set; } = 2000;
+        public int AfterSendKeysWaitTime_ms { get; set; } = 2000;
+        public int m_WaitTimeTillDriverRestart_ms { get; set; } = 15000;
 
         public event EventHandler AppointmentFound;
         public event EventHandler SearchCanceled;
         public event EventHandler<FailEventArgs> SearchFailed;
 
-        public VaccinationAppointmentFinder(int successWaitTime_Ms = 5000)
+        public VaccinationAppointmentFinder()
         {
             m_IsSearching = false;
             m_IsStop = false;
-            m_SuccessWaitTime_ms = successWaitTime_Ms;
         }
 
         private void OnSuccess()
@@ -60,15 +67,12 @@ namespace ImpfTerminBot
         {
             try
             {
-                m_Driver = CreateBrowserDriver(browserType);
-
+                m_BrowserType = browserType;
                 m_Country = centerData.Country;
                 m_Code = code;
                 m_CenterData = centerData;
 
-                var postcode = m_CenterData.Postcode;
-                m_StartUrl = $"{centerData.Url}/impftermine/suche/{code}/{postcode}";
-                m_Driver.Navigate().GoToUrl(m_StartUrl);
+                StartDriver();
 
                 m_IsSearching = true;
                 m_IsStop = false;
@@ -79,6 +83,13 @@ namespace ImpfTerminBot
                 m_IsSearching = false;
                 throw;
             }
+        }
+
+        private void StartDriver()
+        {
+            m_Driver = CreateBrowserDriver(m_BrowserType);
+            m_StartUrl = $"{m_CenterData.Url}impftermine/";
+            m_Driver.Navigate().GoToUrl(m_StartUrl);
         }
 
         private IWebDriver CreateBrowserDriver(eBrowserType browserType)
@@ -129,44 +140,40 @@ namespace ImpfTerminBot
                     {
                         try
                         {
-                            Thread.Sleep(1000);
-
-                            if (PageContains("Ungültiger Vermittlungscode"))
+                            CheckStop();
+                            if (!m_IsSearching)
                             {
-                                var errMsg = "Ungültiger Vermittlungscode.";
-                                OnFail(new FailEventArgs() { ErrorText = errMsg, eErrorType = eErrorType.CodeNotValid });
                                 break;
                             }
 
-                            if (PageContains("Anspruch abgelaufen"))
+                            if (IsError())
                             {
-                                var errMsg = "Anspruch abgelaufen. Vermittlungscode ist nicht mehr gültig.";
-                                OnFail(new FailEventArgs() { ErrorText = errMsg, eErrorType = eErrorType.CodeNotValid });
                                 break;
                             }
 
-                            if(PageContains("Derzeit keine Onlinebuchung von Impfterminen"))
+                            if (PageContains("Cookie Hinweis"))
                             {
-                                var errMsg = "Der gewählte Server bietet derzeit keine Onlinebuchung von Impfterminen. Bitte andere Server-Nummer wählen.";
-                                OnFail(new FailEventArgs() { ErrorText = errMsg, eErrorType = eErrorType.ServerNotWorking });
-                                break;
-                            }
-
-                            if (PageContains("Wartungsarbeiten"))
-                            {
-                                var errMsg = "Es werden momentan Wartungsarbeiten durchgeführt. Bitte später erneut versuchen.";
-                                OnFail(new FailEventArgs() { ErrorText = errMsg, eErrorType = eErrorType.Maintenance });
-                                break;
+                                HandleAcceptCookies();
                             }
 
                             if (PageContains("Buchen Sie die Termine für Ihre Corona-Schutzimpfung"))
                             {
                                 HandlePageBooking();
                             }
+                            CheckStop();
+                            if (!m_IsSearching)
+                            {
+                                break;
+                            }
 
                             if (PageContains("Vermittlungscodes bereits vorhanden"))
                             {
                                 HandlePageCodeExist();
+                            }
+                            CheckStop();
+                            if (!m_IsSearching)
+                            {
+                                break;
                             }
 
                             if (PageContains("Onlinebuchung für Ihre Corona-Schutzimpfung"))
@@ -178,24 +185,32 @@ namespace ImpfTerminBot
                                 }
                                 else
                                 {
-                                    m_Driver.Navigate().GoToUrl(m_StartUrl);
+                                    NavigateToStart();
                                 }
+                            }
+                            CheckStop();
+                            if (!m_IsSearching)
+                            {
+                                break;
                             }
 
                             if (PageContains("Es ist ein interner Fehler aufgetreten"))
                             {
-                                m_Driver.Navigate().GoToUrl(m_StartUrl);
+                                NavigateToStart();
+                            }
+                            CheckStop();
+                            if (!m_IsSearching)
+                            {
+                                break;
                             }
 
                             if (PageContains("Es ist ein unerwarteter Fehler aufgetreten"))
                             {
-                                m_Driver.Navigate().GoToUrl(m_StartUrl);
+                                //RestartDriverAndWait();
+                                NavigateToStart();
                             }
-
-                            while (m_IsStop)
-                            {
-                                Thread.Sleep(100);
-                            }
+                            CheckStop();
+                            Thread.Sleep(LoopWaitTime_ms);
                         }
                         catch (Exception e)
                         {
@@ -215,6 +230,63 @@ namespace ImpfTerminBot
                     CloseBrowser();
                 }      
             );
+        }
+
+        private void RestartDriverAndWait()
+        {
+            var pos = m_Driver.Manage().Window.Position;
+            var size = m_Driver.Manage().Window.Size;
+            CloseBrowser();
+            Thread.Sleep(m_WaitTimeTillDriverRestart_ms);
+            StartDriver();
+            m_Driver.Manage().Window.Position = pos;
+            m_Driver.Manage().Window.Size = size;
+        }
+
+        private bool IsError()
+        {
+            if (PageContains("Ungültiger Vermittlungscode"))
+            {
+                var errMsg = "Ungültiger Vermittlungscode.";
+                OnFail(new FailEventArgs() { ErrorText = errMsg, eErrorType = eErrorType.CodeNotValid });
+                return true;
+            }
+
+            if (PageContains("Anspruch abgelaufen"))
+            {
+                var errMsg = "Anspruch abgelaufen. Vermittlungscode ist nicht mehr gültig.";
+                OnFail(new FailEventArgs() { ErrorText = errMsg, eErrorType = eErrorType.CodeNotValid });
+                return true;
+            }
+
+            if (PageContains("Derzeit keine Onlinebuchung von Impfterminen"))
+            {
+                var errMsg = "Der gewählte Server bietet derzeit keine Onlinebuchung von Impfterminen. Bitte andere Server-Nummer wählen.";
+                OnFail(new FailEventArgs() { ErrorText = errMsg, eErrorType = eErrorType.ServerNotWorking });
+                return true;
+            }
+
+            if (PageContains("Wartungsarbeiten"))
+            {
+                var errMsg = "Es werden momentan Wartungsarbeiten durchgeführt. Bitte später erneut versuchen.";
+                OnFail(new FailEventArgs() { ErrorText = errMsg, eErrorType = eErrorType.Maintenance });
+                return true;
+            }
+            return false;
+        }
+
+        private void CheckStop()
+        {
+            while (m_IsStop)
+            {
+                Thread.Sleep(StopWaitTime_ms);
+            }
+        }
+
+        private void NavigateToStart()
+        {
+            Thread.Sleep(NavigateToStartWaitTime_ms);
+            m_Driver.Navigate().GoToUrl(m_StartUrl);
         }
 
         public void CloseBrowser()
@@ -249,122 +321,92 @@ namespace ImpfTerminBot
             }
         }
 
+        private void HandleAcceptCookies()
+        {
+            var btnSelector = By.XPath("//a[(@class='cookies-info-close btn kv-btn btn-magenta')]");
+            Click(btnSelector);
+        }
+
         private void HandlePageBooking()
         {
-            var select1 = m_Driver.FindElement(By.XPath("//*[@data-select2-id=2]"));
-            select1.Click();
-            Thread.Sleep(500);
-            var country = m_Driver.FindElement(By.XPath($"//*[contains(@id, '{m_Country}')]"));
-            country.Click();
-            Thread.Sleep(500);
+            var select1 = By.XPath("//*[@data-select2-id=2]");
+            Click(select1);
 
-            var select2 = m_Driver.FindElement(By.XPath("//*[@data-select2-id=5]"));
-            select2.Click();
-            Thread.Sleep(500);
-            var center = m_Driver.FindElement(By.XPath($"//li[contains(., '{m_CenterData.Postcode}')]"));
-            center.Click();
-            Thread.Sleep(500);
+            var country = By.XPath($"//*[contains(@id, '{m_Country}')]");
+            Click(country);
 
-            var btnSelector = By.CssSelector("button[class='btn kv-btn btn-magenta text-uppercase d-inline-block']");
+            var select2 = By.XPath("//*[@data-select2-id=5]");
+            Click(select2);
+
+            var center =By.XPath($"//li[contains(., '{m_CenterData.Postcode}')]");
+            Click(center);
+
+            var btnSelector = By.XPath("//button[@class='btn kv-btn btn-magenta text-uppercase d-inline-block']");
             Click(btnSelector);
         }
 
         private void Click(By btnSelector)
         {
-            var wait = new WebDriverWait(m_Driver, TimeSpan.FromSeconds(15));
+            var wait = new WebDriverWait(m_Driver, TimeSpan.FromMilliseconds(FindElementTimeout_ms));
             wait.Until(ExpectedConditions.ElementExists(btnSelector));
             wait.Until(ExpectedConditions.ElementToBeClickable(btnSelector));
 
-            var btn = m_Driver.FindElement(btnSelector);
-            btn.Click();
+            var element = m_Driver.FindElement(btnSelector);
+            PerformMouseMoveTo(element);
+
+            element.Click();
+            Thread.Sleep(AfterClickWaitTime_ms);
+        }
+
+        private void PerformMouseMoveTo(IWebElement element)
+        {
+            var action = new Actions(m_Driver);
+            action.MoveToElement(element).Perform();
+            Thread.Sleep(10);
+        }
+
+        private void PerformMouseMoveTo(By selector)
+        {
+            var element = m_Driver.FindElement(selector);
+            var action = new Actions(m_Driver);
+            action.MoveToElement(element).Perform();
+            Thread.Sleep(10);
         }
 
         private bool HandlePageAppointmentSearch()
         {
             try
             {
-                var btnSelector = By.CssSelector("button[class='btn btn-magenta kv-btn kv-btn-round search-filter-button']");
+                var btnSelector = By.XPath("//button[@class='btn btn-magenta kv-btn kv-btn-round search-filter-button']");
                 Click(btnSelector);
 
-                Thread.Sleep(m_SuccessWaitTime_ms);
                 var isSuccess = Exists(By.XPath("//*[contains(., '1. Impftermin')]")) &&
                                 !Exists(By.XPath("//*[contains(., 'Derzeit stehen leider keine Termine zur Verfügung.')]"));
 
                 if(isSuccess && PersonalData != null)
                 {
-                    // Click 1. termin
-                    var inputFirstAppointment = By.XPath("(//*[@formcontrolname='slotPair'])[1]");
+                    // Click 1. Termin
+                    var inputFirstAppointment = By.XPath("(//div[@class='its-slot-pair-search-radio-btn'])[1]");
                     Click(inputFirstAppointment);
-                    Thread.Sleep(m_SuccessWaitTime_ms);
 
                     // Click Auswählen
                     var buttonChoose = By.XPath("//button[contains(.,'AUSWÄHLEN')]");
                     Click(buttonChoose);
-                    Thread.Sleep(m_SuccessWaitTime_ms);
 
-                    By inputSalutation = null;
-                    switch (PersonalData.Salutation)
-                    {
-                        case eSalutation.Sir:
-                        {
-                            inputSalutation = By.XPath("(//input[@value='Herr'])[1]");
-                            break;
-                        }
-                        case eSalutation.Lady:
-                        {
-                            inputSalutation = By.XPath("(//input[@value='Frau'])[1]");
-                            break;
-                        }
-                        case eSalutation.Divers:
-                        {
-                            inputSalutation = By.XPath("(//input[@value='Divers'])[1]");
-                            break;
-                        }
-                    }
-                    Click(inputSalutation);
-                    Thread.Sleep(m_SuccessWaitTime_ms);
+                    // Click Daten erfassen
+                    var buttonData = By.XPath("//button[contains(.,'Daten erfassen')]");
+                    Click(buttonData);
 
-                    var firstName = m_Driver.FindElement(By.CssSelector("input[formcontrolname='firstname']"));
-                    firstName.SendKeys(PersonalData.FirstName);
-                    Thread.Sleep(1000);
+                    // Persönliche Daten ausfüllen
+                    FillPersonalData();
 
-                    var name = m_Driver.FindElement(By.CssSelector("input[formcontrolname='lastname']"));
-                    name.SendKeys(PersonalData.Name);
-                    Thread.Sleep(1000);
-
-                    var postCode = m_Driver.FindElement(By.CssSelector("input[formcontrolname='zip']"));
-                    postCode.SendKeys(PersonalData.Postcode);
-                    Thread.Sleep(1000);
-
-                    var city = m_Driver.FindElement(By.CssSelector("input[formcontrolname='city']"));
-                    city.SendKeys(PersonalData.City);
-                    Thread.Sleep(1000);
-
-                    var street = m_Driver.FindElement(By.CssSelector("input[formcontrolname='street']"));
-                    street.SendKeys(PersonalData.Street);
-                    Thread.Sleep(1000);
-
-                    var housenumber = m_Driver.FindElement(By.CssSelector("input[formcontrolname='housenumber']"));
-                    housenumber.SendKeys(PersonalData.HouseNumber);
-                    Thread.Sleep(1000);
-
-                    var phone = m_Driver.FindElement(By.CssSelector("input[formcontrolname='phone']"));
-                    phone.SendKeys(PersonalData.Phone);
-                    Thread.Sleep(1000);
-
-                    var email = m_Driver.FindElement(By.CssSelector("input[formcontrolname='notificationReceiver']"));
-                    email.SendKeys(PersonalData.Email);
-                    Thread.Sleep(1000);
-
-                    // Click Auswählen
+                    // Click Übernehmen
                     var buttonOk = By.XPath("//button[contains(.,'Übernehmen')]");
                     Click(buttonOk);
-                    Thread.Sleep(1000);
 
                     // Click Buchen
                     var buttonBook = By.XPath("//button[contains(.,'VERBINDLICH BUCHEN')]");
-                    Click(buttonOk);
-                    Thread.Sleep(1000);
+                    Click(buttonBook);
                 }
 
                 return isSuccess;
@@ -375,25 +417,104 @@ namespace ImpfTerminBot
             }
         }
 
+        private void FillPersonalData()
+        {
+            By salutation = null;
+            switch (PersonalData.Salutation)
+            {
+                case eSalutation.Sir:
+                    {
+                        //inputSalutation = By.XPath("(//input[@value='Herr'])[1]");
+                        salutation = By.XPath("//label[@class='ets-radio-control'][1]");
+                        break;
+                    }
+                case eSalutation.Lady:
+                    {
+                        //inputSalutation = By.XPath("(//input[@value='Frau'])[1]");
+                        salutation = By.XPath("//label[@class='ets-radio-control'][2]");
+                        break;
+                    }
+                case eSalutation.Divers:
+                    {
+                        //inputSalutation = By.XPath("(//input[@value='Divers'])[1]");
+                        salutation = By.XPath("//label[@class='ets-radio-control'][3]");
+                        break;
+                    }
+            }
+            Click(salutation);
+
+            var firstName = By.XPath("//input[@formcontrolname='firstname']");
+            SendKeys(firstName, PersonalData.FirstName);
+
+            var name = By.XPath("//input[@formcontrolname='lastname']");
+            SendKeys(name, PersonalData.Name);
+
+            var postCode = By.XPath("//input[@formcontrolname='zip']");
+            SendKeys(postCode, PersonalData.Postcode);
+
+            var city = By.XPath("//input[@formcontrolname='city']");
+            SendKeys(city, PersonalData.City);
+
+            var street = By.XPath("//input[@formcontrolname='street']");
+            SendKeys(street, PersonalData.Street);
+
+            var housenumber = By.XPath("//input[@formcontrolname='housenumber']");
+            SendKeys(housenumber, PersonalData.HouseNumber);
+
+            var phone = By.XPath("//input[@formcontrolname='phone']");
+            SendKeys(phone, PersonalData.Phone);
+
+            var email = By.XPath("//input[@formcontrolname='notificationReceiver']");
+            SendKeys(email, PersonalData.Email);
+        }
+
+        private void SendKeys(By selector, string content)
+        {
+            var wait = new WebDriverWait(m_Driver, TimeSpan.FromMilliseconds(FindElementTimeout_ms));
+            wait.Until(ExpectedConditions.ElementExists(selector));
+            wait.Until(ExpectedConditions.ElementToBeClickable(selector));
+
+            var element = m_Driver.FindElement(selector);
+            PerformMouseMoveTo(element);
+            element.SendKeys(content);
+            Thread.Sleep(AfterSendKeysWaitTime_ms);
+        }
+
         private void HandlePageCodeExist()
         {
-            var labels = m_Driver.FindElements(By.CssSelector("label[class='ets-radio-control']"));
-            var labelYes = labels[0];
-            labelYes.Click();
-            Thread.Sleep(500);
+            var labelYes = By.XPath("//label[@class='ets-radio-control'][1]");
+            var labelNo = By.XPath("//label[@class='ets-radio-control'][2]");
 
-            var text1 = m_Driver.FindElement(By.CssSelector("input[name='ets-input-code-0']"));
-            text1.SendKeys(m_Code);
-            Thread.Sleep(500);
+            PerformMouseMoveTo(labelYes);
+            PerformMouseMoveTo(labelNo);
+            PerformMouseMoveTo(labelYes);
+            PerformMouseMoveTo(labelNo);
+            PerformMouseMoveTo(labelYes);
 
-            var btnSelector = By.CssSelector("button[class='btn kv-btn btn-magenta text-uppercase d-inline-block']");
+            Click(labelYes);
+
+            PerformMouseMoveTo(labelYes);
+            PerformMouseMoveTo(labelNo);
+            PerformMouseMoveTo(labelYes);
+            PerformMouseMoveTo(labelNo);
+            PerformMouseMoveTo(labelYes);
+
+            var text1 = By.XPath("//input[@name='ets-input-code-0']");
+            SendKeys(text1, m_Code);
+
+            PerformMouseMoveTo(labelYes);
+            PerformMouseMoveTo(labelNo);
+            PerformMouseMoveTo(labelYes);
+            PerformMouseMoveTo(labelNo);
+            PerformMouseMoveTo(labelYes);
+
+            var btnSelector = By.XPath("//button[@class='btn kv-btn btn-magenta text-uppercase d-inline-block']");
             Click(btnSelector);
 
-            Thread.Sleep(500);
             if (Exists(By.XPath("//*[contains(., 'Es ist ein unerwarteter Fehler aufgetreten')]")))
             {
-                Thread.Sleep(2000);
-                m_Driver.Navigate().GoToUrl(m_StartUrl);
+                //RestartDriverAndWait();
+                NavigateToStart();
             }
         }
 
