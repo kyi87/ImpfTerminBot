@@ -5,7 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <PublishChromeDriver>true</PublishChromeDriver>
-    <AssemblyName>ImpfTerminBot</AssemblyName>
+    <AssemblyName>ImpfTerminBot.GUI</AssemblyName>
     <ApplicationIcon>syringe_medical_10730.ico</ApplicationIcon>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
