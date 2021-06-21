@@ -6,6 +6,7 @@ using System.Media;
 using ImpfTerminBot.Model;
 using ImpfTerminBot.ErrorHandling;
 using System.Threading.Tasks;
+using static System.Environment;
 
 namespace ImpfTerminBot.GUI
 {
@@ -14,6 +15,7 @@ namespace ImpfTerminBot.GUI
         private List<CountryData> m_LocationData;
         private VaccinationAppointmentFinder m_AppointmentFinder;
         private string m_Code;
+        private string m_Path = "";
         private string m_PersonalDataFileName = "personalData.bin";
 
         public View()
@@ -23,6 +25,7 @@ namespace ImpfTerminBot.GUI
             m_AppointmentFinder.SearchCanceled += OnSearchCanceled;
             m_AppointmentFinder.SearchFailed += OnFail;
 
+            CreateProgramDataDir();
             InitializeComponent();
             ReadCountryData();
             InitCodeMaskedTextbox();
@@ -37,14 +40,25 @@ namespace ImpfTerminBot.GUI
             SubscribeEvents();
         }
 
+        private void CreateProgramDataDir()
+        {
+            var commonpath = Environment.GetFolderPath(SpecialFolder.CommonApplicationData);
+            m_Path = Path.Combine(commonpath, "ImpfTerminBot");
+
+            if (!Directory.Exists(m_Path))
+            {
+                Directory.CreateDirectory(m_Path);
+            }
+        }
+
         private void SubscribeEvents()
         {
             cbSalutation.SelectedIndexChanged += new EventHandler(tbPersonalData_TextChanged);
             tbCity.TextChanged += new EventHandler(tbPersonalData_TextChanged);
             tbEmail.TextChanged += new EventHandler(tbPersonalData_TextChanged);
-            tbFirstname.TextChanged += new EventHandler(tbPersonalData_TextChanged);
-            tbHouseNumber.TextChanged += new EventHandler(tbPersonalData_TextChanged);
             tbName.TextChanged += new EventHandler(tbPersonalData_TextChanged);
+            tbHouseNumber.TextChanged += new EventHandler(tbPersonalData_TextChanged);
+            tbFirstname.TextChanged += new EventHandler(tbPersonalData_TextChanged);
             tbPhone.TextChanged += new EventHandler(tbPersonalData_TextChanged);
             tbPostcode.TextChanged += new EventHandler(tbPersonalData_TextChanged);
             tbStreet.TextChanged += new EventHandler(tbPersonalData_TextChanged);
@@ -123,15 +137,7 @@ namespace ImpfTerminBot.GUI
             try
             {
                 var reader = new CountryDataReader();
-                try
-                {
-                    m_LocationData = reader.ReadFromUrl();
-                }
-                catch (Exception e)
-                {
-                    var fileName = "data.json";
-                    m_LocationData = reader.ReadFromFile(fileName);
-                }
+                m_LocationData = reader.ReadFromUrl();
             }
             catch (Exception e)
             {
@@ -142,19 +148,24 @@ namespace ImpfTerminBot.GUI
 
         private void LoadPersonalData()
         {
-            if (File.Exists(m_PersonalDataFileName))
+            if (File.Exists(GetPersonalDataFilePath()))
             {
                 var serializer = new PersonalDataBinarySerializer();
-                var personalData = serializer.Deserialize(m_PersonalDataFileName);
+                var personalData = serializer.Deserialize(GetPersonalDataFilePath());
                 SetPersonalData(personalData);
             }
+        }
+
+        private string GetPersonalDataFilePath()
+        {
+            return Path.Combine(m_Path, m_PersonalDataFileName);
         }
 
         private void SavePersonalData()
         {
             var personalData = GetPersonalData();
             var serializer = new PersonalDataBinarySerializer();
-            serializer.Serialize(personalData, m_PersonalDataFileName);
+            serializer.Serialize(personalData, GetPersonalDataFilePath());
         }
 
         private void InitCodeMaskedTextbox()
@@ -416,8 +427,8 @@ namespace ImpfTerminBot.GUI
         {
             cbSalutation.SelectedIndex = (int)personalData.Salutation;
             tbCity.Text = personalData.City;
-            tbFirstname.Text = personalData.FirstName;
             tbName.Text = personalData.Name;
+            tbFirstname.Text = personalData.FirstName;
             tbEmail.Text = personalData.Email;
             tbHouseNumber.Text = personalData.HouseNumber;
             tbPhone.Text = personalData.Phone;
@@ -428,8 +439,8 @@ namespace ImpfTerminBot.GUI
         private void EnablePersonalData(bool b)
         {
             cbSalutation.Enabled = b;
-            tbName.Enabled = b;
             tbFirstname.Enabled = b;
+            tbName.Enabled = b;
             tbPostcode.Enabled = b;
             tbCity.Enabled = b;
             tbStreet.Enabled = b;

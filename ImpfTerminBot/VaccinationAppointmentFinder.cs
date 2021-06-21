@@ -12,7 +12,6 @@ using OpenQA.Selenium.Support.UI;
 
 namespace ImpfTerminBot
 {
-
     public class VaccinationAppointmentFinder
     {
         private string m_Code;
@@ -28,9 +27,9 @@ namespace ImpfTerminBot
         public int LoopWaitTime_ms { get; set; } = 1000;
         public int FindElementTimeout_ms { get; set; } = 15000;
         public int StopWaitTime_ms { get; set; } = 10;
-        public int NavigateToStartWaitTime_ms { get; set; } = 2000;
-        public int AfterClickWaitTime_ms { get; set; } = 2000;
-        public int AfterSendKeysWaitTime_ms { get; set; } = 2000;
+        public int NavigateToStartWaitTime_ms { get; set; } = 1000;
+        public int AfterClickWaitTime_ms { get; set; } = 1000;
+        public int AfterSendKeysWaitTime_ms { get; set; } = 1000;
         public int m_WaitTimeTillDriverRestart_ms { get; set; } = 15000;
 
         public event EventHandler AppointmentFound;

@@ -64,11 +64,11 @@ namespace ImpfTerminBot.GUI
             this.label9 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.tbName = new System.Windows.Forms.TextBox();
+            this.tbFirstname = new System.Windows.Forms.TextBox();
             this.tbPostcode = new System.Windows.Forms.TextBox();
             this.tbStreet = new System.Windows.Forms.TextBox();
             this.tbPhone = new System.Windows.Forms.TextBox();
-            this.tbFirstname = new System.Windows.Forms.TextBox();
+            this.tbName = new System.Windows.Forms.TextBox();
             this.tbCity = new System.Windows.Forms.TextBox();
             this.tbHouseNumber = new System.Windows.Forms.TextBox();
             this.tbEmail = new System.Windows.Forms.TextBox();
@@ -337,7 +337,7 @@ namespace ImpfTerminBot.GUI
             this.tableLayoutPanel5.ColumnCount = 3;
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 46.90266F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 53.09734F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 211F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 212F));
             this.tableLayoutPanel5.Controls.Add(this.rbChrome, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.rbFirefox, 1, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -367,7 +367,7 @@ namespace ImpfTerminBot.GUI
             this.rbFirefox.AutoSize = true;
             this.rbFirefox.Location = new System.Drawing.Point(158, 7);
             this.rbFirefox.Name = "rbFirefox";
-            this.rbFirefox.Size = new System.Drawing.Size(170, 19);
+            this.rbFirefox.Size = new System.Drawing.Size(169, 19);
             this.rbFirefox.TabIndex = 14;
             this.rbFirefox.TabStop = true;
             this.rbFirefox.Text = "Firefox";
@@ -414,11 +414,11 @@ namespace ImpfTerminBot.GUI
             this.tableLayoutPanel8.Controls.Add(this.label9, 2, 1);
             this.tableLayoutPanel8.Controls.Add(this.label7, 0, 2);
             this.tableLayoutPanel8.Controls.Add(this.label6, 0, 1);
-            this.tableLayoutPanel8.Controls.Add(this.tbName, 1, 1);
+            this.tableLayoutPanel8.Controls.Add(this.tbFirstname, 1, 1);
             this.tableLayoutPanel8.Controls.Add(this.tbPostcode, 1, 2);
             this.tableLayoutPanel8.Controls.Add(this.tbStreet, 1, 3);
             this.tableLayoutPanel8.Controls.Add(this.tbPhone, 1, 4);
-            this.tableLayoutPanel8.Controls.Add(this.tbFirstname, 3, 1);
+            this.tableLayoutPanel8.Controls.Add(this.tbName, 3, 1);
             this.tableLayoutPanel8.Controls.Add(this.tbCity, 3, 2);
             this.tableLayoutPanel8.Controls.Add(this.tbHouseNumber, 3, 3);
             this.tableLayoutPanel8.Controls.Add(this.tbEmail, 3, 4);
@@ -492,9 +492,9 @@ namespace ImpfTerminBot.GUI
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(328, 42);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(54, 15);
+            this.label9.Size = new System.Drawing.Size(39, 15);
             this.label9.TabIndex = 12;
-            this.label9.Text = "Vorname";
+            this.label9.Text = "Name";
             // 
             // label7
             // 
@@ -512,17 +512,17 @@ namespace ImpfTerminBot.GUI
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(3, 42);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(39, 15);
+            this.label6.Size = new System.Drawing.Size(54, 15);
             this.label6.TabIndex = 0;
-            this.label6.Text = "Name";
+            this.label6.Text = "Vorname";
             // 
-            // tbName
+            // tbFirstname
             // 
-            this.tbName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbName.Location = new System.Drawing.Point(107, 38);
-            this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(215, 23);
-            this.tbName.TabIndex = 5;
+            this.tbFirstname.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbFirstname.Location = new System.Drawing.Point(107, 38);
+            this.tbFirstname.Name = "tbFirstname";
+            this.tbFirstname.Size = new System.Drawing.Size(215, 23);
+            this.tbFirstname.TabIndex = 5;
             // 
             // tbPostcode
             // 
@@ -548,13 +548,13 @@ namespace ImpfTerminBot.GUI
             this.tbPhone.Size = new System.Drawing.Size(215, 23);
             this.tbPhone.TabIndex = 11;
             // 
-            // tbFirstname
+            // tbName
             // 
-            this.tbFirstname.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbFirstname.Location = new System.Drawing.Point(432, 38);
-            this.tbFirstname.Name = "tbFirstname";
-            this.tbFirstname.Size = new System.Drawing.Size(217, 23);
-            this.tbFirstname.TabIndex = 6;
+            this.tbName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbName.Location = new System.Drawing.Point(432, 38);
+            this.tbName.Name = "tbName";
+            this.tbName.Size = new System.Drawing.Size(217, 23);
+            this.tbName.TabIndex = 6;
             // 
             // tbCity
             // 
@@ -703,7 +703,7 @@ namespace ImpfTerminBot.GUI
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox tbName;
+        private System.Windows.Forms.TextBox tbFirstname;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox tbStreet;
         private System.Windows.Forms.TextBox tbPhone;
@@ -712,7 +712,7 @@ namespace ImpfTerminBot.GUI
         private System.Windows.Forms.TextBox tbHouseNumber;
         private System.Windows.Forms.TextBox tbEmail;
         private System.Windows.Forms.TextBox tbPostcode;
-        private System.Windows.Forms.TextBox tbFirstname;
+        private System.Windows.Forms.TextBox tbName;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.ComboBox cbSalutation;
