@@ -350,7 +350,6 @@ namespace ImpfTerminBot
             wait.Until(ExpectedConditions.ElementToBeClickable(btnSelector));
 
             var element = m_Driver.FindElement(btnSelector);
-            PerformMouseMoveTo(element);
 
             element.Click();
             Thread.Sleep(AfterClickWaitTime_ms);

@@ -61,6 +61,10 @@ Der Bot meldet sich akustisch sobald ein Termin gefunden wurde. Die Daten müsse
 
 Es stehen Chrome und Firefox als Browser zur Wahl. Der jeweilige Browser muss installiert sein.
 
+### Signalton testen
+
+Beim Klick auf den Button kann der Signalton getestet werden.
+
 ## Voraussetzungen
 
 - **Betriebssystem:** Nur unter Windows (10) lauffähig
