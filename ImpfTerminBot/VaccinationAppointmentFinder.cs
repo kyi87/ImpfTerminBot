@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -484,29 +483,10 @@ namespace ImpfTerminBot
         {
             var labelYes = By.XPath("//label[@class='ets-radio-control'][1]");
             var labelNo = By.XPath("//label[@class='ets-radio-control'][2]");
-
-            PerformMouseMoveTo(labelYes);
-            PerformMouseMoveTo(labelNo);
-            PerformMouseMoveTo(labelYes);
-            PerformMouseMoveTo(labelNo);
-            PerformMouseMoveTo(labelYes);
-
             Click(labelYes);
-
-            PerformMouseMoveTo(labelYes);
-            PerformMouseMoveTo(labelNo);
-            PerformMouseMoveTo(labelYes);
-            PerformMouseMoveTo(labelNo);
-            PerformMouseMoveTo(labelYes);
 
             var text1 = By.XPath("//input[@name='ets-input-code-0']");
             SendKeys(text1, m_Code);
-
-            PerformMouseMoveTo(labelYes);
-            PerformMouseMoveTo(labelNo);
-            PerformMouseMoveTo(labelYes);
-            PerformMouseMoveTo(labelNo);
-            PerformMouseMoveTo(labelYes);
 
             var btnSelector = By.XPath("//button[@class='btn kv-btn btn-magenta text-uppercase d-inline-block']");
             Click(btnSelector);
